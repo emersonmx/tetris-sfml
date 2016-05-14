@@ -6,3 +6,4 @@ tags
 .project
 .cproject
 *.py[co]
+*\~

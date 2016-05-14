@@ -1,0 +1,8 @@
+build
+tags
+.vimproject
+.ycm_extra_conf.py
+.settings/
+.project
+.cproject
+*.py[co]

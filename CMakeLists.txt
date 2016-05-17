@@ -56,6 +56,8 @@ add_executable(${PROJECT_NAME}
     src/Tetris/Game/Tetris.cpp
     src/Tetris/Game/Tetromino.cpp
 
+    src/Tetris/Application.cpp
+
     src/MXG/Application.cpp
     src/MXG/Game.cpp
     src/MXG/Random.cpp

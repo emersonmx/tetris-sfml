@@ -53,6 +53,8 @@ include_directories(${PROJECT_SOURCE_DIR}/src
 
 add_executable(${PROJECT_NAME}
     src/Tetris/Main.cpp
+    src/Tetris/Game/Tetris.cpp
+    src/Tetris/Game/Tetromino.cpp
 
     src/MXG/Application.cpp
     src/MXG/Game.cpp

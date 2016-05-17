@@ -9,6 +9,8 @@
 
 #include <MXG/Game.hpp>
 
+#include "Tetris/Assets.hpp"
+
 namespace tetris {
 
 class Application : public mxg::Game {
@@ -17,6 +19,7 @@ class Application : public mxg::Game {
         static const int WINDOW_HEIGHT = 480;
 
         sf::RenderWindow& window() { return window_; }
+        Assets& assets() { return assets_; }
 
     protected:
         void create() override;
@@ -29,6 +32,7 @@ class Application : public mxg::Game {
         void changeState(const std::string& name);
 
         sf::RenderWindow window_;
+        Assets assets_;
 
     private:
         std::unordered_map< std::string, std::unique_ptr<mxg::State> > states_;

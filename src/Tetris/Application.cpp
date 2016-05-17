@@ -11,6 +11,8 @@ void Application::create() {
     int flags = sf::Style::Titlebar | sf::Style::Close;
     window_.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Tetris", flags);
 
+    assets_.loadAssets();
+
     clearState();
     states_["game_state"] = std::make_unique<GameState>(this);
     changeState("game_state");

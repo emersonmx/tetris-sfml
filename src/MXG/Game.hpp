@@ -10,10 +10,12 @@ class Game : public Application {
     public:
         State* currentState() { return currentState_; }
         void changeState(State* state);
+        void clearState() { currentState_ = nullptr; }
 
     private:
         void throwExceptionIfNull(State* state);
-        State* currentState_;
+
+        State* currentState_ = nullptr;
 };
 
 } /* namespace mxg */

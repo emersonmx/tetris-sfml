@@ -1,0 +1,50 @@
+#include "Tetris/States/DefaultState.hpp"
+
+#include <iostream>
+
+#include "SFML/Window/Window.hpp"
+
+#include "Tetris/Application.hpp"
+
+namespace tetris {
+
+void DefaultState::tick() {
+    beginTick();
+
+    sf::Time time = clock_.restart();
+
+    processEvents();
+
+    timeAccumulator_ += time.asSeconds();
+    if (timeAccumulator_ >= TIME_STEP) {
+        update();
+        timeAccumulator_ -= TIME_STEP;
+    }
+
+    render();
+
+    endTick();
+}
+
+void DefaultState::processEvents() {
+    sf::Event event;
+    sf::Window& window = app_->window();
+    while (window.pollEvent(event)) {
+        processEvent(event);
+    }
+}
+
+void DefaultState::render() {
+    sf::RenderWindow& window = app_->window();
+    window.clear();
+    render(window);
+    window.display();
+}
+
+void DefaultState::processEvent(const sf::Event& event) {
+    if (event.type == sf::Event::Closed) {
+        app_->exit();
+    }
+}
+
+} /* namespace tetris */

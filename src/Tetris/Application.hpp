@@ -4,11 +4,20 @@
 #include <memory>
 #include <unordered_map>
 
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Clock.hpp>
+
 #include <MXG/Game.hpp>
 
 namespace tetris {
 
 class Application : public mxg::Game {
+    public:
+        static const int WINDOW_WIDTH = 640;
+        static const int WINDOW_HEIGHT = 480;
+
+        sf::RenderWindow& window() { return window_; }
+
     protected:
         void create() override;
         void destroy() override;
@@ -18,6 +27,8 @@ class Application : public mxg::Game {
         mxg::State* getState(const std::string& name);
 
         void changeState(const std::string& name);
+
+        sf::RenderWindow window_;
 
     private:
         std::unordered_map< std::string, std::unique_ptr<mxg::State> > states_;

@@ -13,11 +13,7 @@ class DefaultState: public State {
         void enter() override {}
         void exit() override {}
 
-        void beginTick() override {}
-        void processEvents() override {}
-        void update() override {}
-        void render() override {}
-        void endTick() override {}
+        void tick() override {}
 };
 
 } /* namespace mxg */

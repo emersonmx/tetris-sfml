@@ -13,11 +13,7 @@ class State {
         virtual void enter() = 0;
         virtual void exit() = 0;
 
-        virtual void beginTick() = 0;
-        virtual void processEvents() = 0;
-        virtual void update() = 0;
-        virtual void render() = 0;
-        virtual void endTick() = 0;
+        virtual void tick() = 0;
 };
 
 } /* namespace mxg */

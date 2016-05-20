@@ -9,6 +9,9 @@
 - Permitir rotação das peças no sentido horário e anti-horário
 - Quando a peça colar nas outras, uma nova peça aleatória será escolhida
 
+## Detalhes
+- Rotação (http://tetris.wikia.com/wiki/SRS)
+
 ## Frescuras
 - As cores das peças I, J, L, O, S, T, Z serão ciano, púrpura, magenta, cinza,
   verde limão, amarelo e vermelho.

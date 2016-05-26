@@ -15,12 +15,14 @@ class Tetromino {
             int y;
         };
         enum class Type {
-            NONE, I, J, L, O, S, T, Z
+            I, J, L, O, S, T, Z
         };
         using BlockArray = std::array<Block, 4>;
         using RotationArray = std::array<BlockArray, 4>;
 
-        Tetromino(const RotationArray& rotationArray);
+        Tetromino(const RotationArray& rotationArray, Type);
+
+        Type type() const { return type_; }
 
         void turnLeft();
         void turnRight();
@@ -30,12 +32,12 @@ class Tetromino {
 
         int x;
         int y;
-        Type type;
 
         int pivot_x = 1;
         int pivot_y = 2;
 
     private:
+        Type type_;
         int rotation_{};
         RotationArray rotationArray_{};
 };

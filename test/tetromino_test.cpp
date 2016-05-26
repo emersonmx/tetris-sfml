@@ -3,10 +3,40 @@
 
 using namespace tetris;
 
+void printType(const Tetromino::Type& type) {
+    std::cout << "Type: ";
+    switch (type) {
+        case Tetromino::Type::I:
+            std::cout << "I";
+            break;
+        case Tetromino::Type::J:
+            std::cout << "J";
+            break;
+        case Tetromino::Type::L:
+            std::cout << "L";
+            break;
+        case Tetromino::Type::O:
+            std::cout << "O";
+            break;
+        case Tetromino::Type::S:
+            std::cout << "S";
+            break;
+        case Tetromino::Type::T:
+            std::cout << "T";
+            break;
+        case Tetromino::Type::Z:
+            std::cout << "Z";
+            break;
+        default:
+            std::cout << "-";
+    }
+    std::cout << std::endl;
+}
+
 void printTetrominoAttr(const Tetromino& tetromino) {
-    std::cout << tetromino.x << ", " << tetromino.y << std::endl;
-    std::cout << static_cast<int>(tetromino.type) << std::endl;
-    std::cout << tetromino.pivot_x << ", " << tetromino.pivot_y << std::endl;
+    std::cout << "Position: " << tetromino.x << ", " << tetromino.y << std::endl;
+    printType(tetromino.type());
+    std::cout << "Pivot: " << tetromino.pivot_x << ", " << tetromino.pivot_y << std::endl;
 }
 
 void printTetromino(Tetromino& tetromino) {
@@ -58,10 +88,11 @@ int main() {
         Tetromino::BlockArray {{
             {1, 1}, {1, 2}, {1, 3}, {0, 2}
         }},
-    }};
+    }, Tetromino::Type::T};
 
     std::cout << "Attributes" << std::endl;
     printTetrominoAttr(t);
+    std::cout << std::endl;
 
     std::cout << "TEST turnRight()" << std::endl;
     t.resetRotation();

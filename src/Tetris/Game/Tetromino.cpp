@@ -2,8 +2,8 @@
 
 namespace tetris {
 
-Tetromino::Tetromino(const Tetromino::RotationArray& rotationArray)
-    : rotationArray_{rotationArray} {}
+Tetromino::Tetromino(const Tetromino::RotationArray& rotationArray, Tetromino::Type type)
+    : type_(type), rotationArray_{rotationArray} {}
 
 void Tetromino::turnLeft() {
     rotation_--;

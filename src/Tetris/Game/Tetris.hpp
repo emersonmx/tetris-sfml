@@ -1,6 +1,8 @@
 #ifndef TETRIS_GAME_TETRIS_HPP_
 #define TETRIS_GAME_TETRIS_HPP_
 
+#include <unordered_map>
+
 #include "Tetris/Game/Tetromino.hpp"
 
 namespace tetris {
@@ -10,16 +12,20 @@ class Tetris {
         static const int WORLD_WIDTH = 10;
         static const int WORLD_HEIGHT = 18;
 
+        Tetromino& currentTetromino();
+        Tetromino nextTetromino() const;
+
         void create();
         void destroy();
 
         void update();
 
     private:
-        int nextUUID() { return uuid_++; }
-
         std::array<Tetromino::Block, WORLD_WIDTH * WORLD_HEIGHT> world_;
-        int uuid_ = 1;
+        std::unordered_map<Tetromino::Type, Tetromino> tetrominoHash_;
+
+        Tetromino::Type currentTetromino_;
+        Tetromino::Type nextTetromino_;
 };
 
 } /* namespace tetris */

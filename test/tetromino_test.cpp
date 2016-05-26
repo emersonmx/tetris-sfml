@@ -75,7 +75,7 @@ void printDirection(int rotation) {
 }
 
 int main() {
-    Tetromino t = {{
+    Tetromino t{{
         Tetromino::BlockArray {{
             {0, 2}, {1, 2}, {2, 2}, {1, 1}
         }},

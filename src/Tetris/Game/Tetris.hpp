@@ -12,7 +12,7 @@ class Tetris {
         static const int WORLD_WIDTH = 10;
         static const int WORLD_HEIGHT = 18;
 
-        Tetromino& currentTetromino();
+        Tetromino& currentTetromino() { return currentTetromino_; }
         Tetromino nextTetromino() const;
 
         void create();
@@ -21,10 +21,12 @@ class Tetris {
         void update();
 
     private:
-        std::array<Tetromino::Block, WORLD_WIDTH * WORLD_HEIGHT> world_;
+        void setupTetrominoHash();
+
+        std::array<bool, WORLD_WIDTH * WORLD_HEIGHT> world_;
         std::unordered_map<Tetromino::Type, Tetromino> tetrominoHash_;
 
-        Tetromino::Type currentTetromino_;
+        Tetromino currentTetromino_;
         Tetromino::Type nextTetromino_;
 };
 

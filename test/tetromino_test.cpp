@@ -34,9 +34,9 @@ void printType(const Tetromino::Type& type) {
 }
 
 void printTetrominoAttr(const Tetromino& tetromino) {
-    std::cout << "Position: " << tetromino.x << ", " << tetromino.y << std::endl;
+    std::cout << "Position: " << tetromino.x() << ", " << tetromino.y() << std::endl;
     printType(tetromino.type());
-    std::cout << "Pivot: " << tetromino.pivot_x << ", " << tetromino.pivot_y << std::endl;
+    std::cout << "Pivot: " << tetromino.pivot().x << ", " << tetromino.pivot().y << std::endl;
 }
 
 void printTetromino(Tetromino& tetromino) {
@@ -88,41 +88,30 @@ int main() {
         Tetromino::BlockArray {{
             {1, 1}, {1, 2}, {1, 3}, {0, 2}
         }},
-    }, Tetromino::Type::T};
+    }, {0, 0}, Tetromino::Type::T};
 
     std::cout << "Attributes" << std::endl;
     printTetrominoAttr(t);
     std::cout << std::endl;
 
     std::cout << "TEST turnRight()" << std::endl;
-    t.resetRotation();
     for (int i = 0; i < 4; ++i) {
         std::cout << "Direction ";
         printDirection(i % 4);
         std::cout << std::endl;
         printTetromino(t);
-        t.turnRight();
         std::cout << std::endl;
+        t.turnRight();
     }
 
-    std::cout << "TEST resetRotation()" << std::endl;
-    t.turnRight();
-    t.resetRotation();
-    std::cout << "Direction ";
-    printDirection(0);
-    std::cout << std::endl;
-    printTetromino(t);
-    std::cout << std::endl;
-
     std::cout << "TEST turnLeft()" << std::endl;
-    t.resetRotation();
     for (int i = 0; i < 4; ++i) {
         std::cout << "Direction ";
         printDirection((4 - i) % 4);
         std::cout << std::endl;
         printTetromino(t);
-        t.turnLeft();
         std::cout << std::endl;
+        t.turnLeft();
     }
 
     return 0;

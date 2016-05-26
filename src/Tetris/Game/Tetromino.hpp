@@ -27,7 +27,6 @@ class Tetromino {
 
         int x() const { return position_.x; }
         int y() const { return position_.y; }
-        Position position() const { return position_; }
         Pivot pivot() const { return pivot_; }
         Type type() const { return type_; }
 

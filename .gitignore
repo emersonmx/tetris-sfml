@@ -7,3 +7,4 @@ tags
 .cproject
 *.py[co]
 *\~
+.idea/

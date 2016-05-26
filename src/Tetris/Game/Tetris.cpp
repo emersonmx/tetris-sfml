@@ -3,7 +3,6 @@
 namespace tetris {
 
 void Tetris::create() {
-    world_.fill(Block::EMPTY);
 }
 
 void Tetris::destroy() {

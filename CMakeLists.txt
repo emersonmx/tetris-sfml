@@ -11,6 +11,9 @@ configure_file(
     "${PROJECT_BINARY_DIR}/Config.hpp"
 )
 
+option(BUILD_SANDBOX "Build sandbox code" OFF)
+option(BUILD_TESTS "Build tests" OFF)
+
 # Compiler settings
 if (CMAKE_BUILD_TYPE STREQUAL "")
     set(CMAKE_BUILD_TYPE Debug)
@@ -50,6 +53,14 @@ include_directories(${PROJECT_SOURCE_DIR}/src
     ${PROJECT_BINARY_DIR}
     ${EXTRA_INCLUDES}
 )
+
+if (BUILD_SANDBOX)
+    add_subdirectory(sandbox)
+endif()
+
+if (BUILD_TESTS)
+    add_subdirectory(test)
+endif()
 
 add_executable(${PROJECT_NAME}
     src/Tetris/Main.cpp

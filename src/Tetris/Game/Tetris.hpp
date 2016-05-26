@@ -1,7 +1,7 @@
 #ifndef TETRIS_GAME_TETRIS_HPP_
 #define TETRIS_GAME_TETRIS_HPP_
 
-#include <array>
+#include "Tetris/Game/Tetromino.hpp"
 
 namespace tetris {
 
@@ -16,12 +16,10 @@ class Tetris {
         void update();
 
     private:
-        enum class Block {
-            EMPTY,
-            FILLED
-        };
+        int nextUUID() { return uuid_++; }
 
-        std::array<Block, WORLD_WIDTH * WORLD_HEIGHT> world_;
+        std::array<Tetromino::Block, WORLD_WIDTH * WORLD_HEIGHT> world_;
+        int uuid_ = 1;
 };
 
 } /* namespace tetris */

@@ -41,9 +41,9 @@ class Tetromino {
         void turnLeft();
         void turnRight();
 
-        void _fall();
-
     private:
+        friend class Tetris;
+
         Position position_;
         Pivot pivot_;
         Type type_;

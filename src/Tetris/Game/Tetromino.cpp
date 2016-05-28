@@ -31,8 +31,4 @@ void Tetromino::turnRight() {
     rotation_ = rotation_ % ROTATION_SIZE;
 }
 
-void Tetromino::_fall() {
-    position_.y++;
-}
-
 } /* namespace tetris */

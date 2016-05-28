@@ -40,7 +40,8 @@ class Tetromino {
         void moveRight() { position_.x++; }
         void turnLeft();
         void turnRight();
-        void fall();
+
+        void _fall();
 
     private:
         Position position_;

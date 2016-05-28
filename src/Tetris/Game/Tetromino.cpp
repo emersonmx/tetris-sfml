@@ -31,7 +31,7 @@ void Tetromino::turnRight() {
     rotation_ = rotation_ % ROTATION_SIZE;
 }
 
-void Tetromino::fall() {
+void Tetromino::_fall() {
     position_.y++;
 }
 

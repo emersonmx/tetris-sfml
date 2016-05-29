@@ -9,7 +9,7 @@ Tetromino::Tetromino(const Tetromino::RotationArray& rotationArray,
       rotationArray_{rotationArray} {}
 
 Tetromino::BlockArray Tetromino::getBlocks() {
-    return std::move(rotationArray_[rotation_]);
+    return rotationArray_[rotation_];
 }
 
 Tetromino::BlockArray Tetromino::getComputedBlocks() {

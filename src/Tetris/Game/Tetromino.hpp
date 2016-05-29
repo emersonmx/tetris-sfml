@@ -36,21 +36,26 @@ class Tetromino {
         BlockArray getBlocks();
         BlockArray getComputedBlocks();
 
-        void moveLeft() { position_.x--; }
-        void moveRight() { position_.x++; }
+        void moveLeft() { moveInput_ = MoveInput::LEFT; }
+        void moveRight() { moveInput_ = MoveInput::RIGHT; }
         void turnLeft();
         void turnRight();
 
     private:
         friend class Tetris;
 
+        enum class MoveInput {
+            LEFT=-1, NONE, RIGHT
+        };
+
         Position position_;
         Pivot pivot_;
         Type type_;
 
         int rotation_ = 0;
-        bool fastFall_ = false;
         RotationArray rotationArray_{};
+        bool fastFall_ = false;
+        MoveInput moveInput_ = MoveInput::NONE;
 };
 
 } /* namespace tetris */

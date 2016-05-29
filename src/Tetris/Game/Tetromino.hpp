@@ -18,7 +18,7 @@ class Tetromino {
             I, J, L, O, S, T, Z
         };
         using Block = Position;
-        using Pivot = Block;
+        using Pivot = Position;
         using BlockArray = std::array<Block, 4>;
         using RotationArray = std::array<BlockArray, 4>;
 

@@ -21,6 +21,14 @@ Tetromino::BlockArray Tetromino::getComputedBlocks() {
     return std::move(rotationArray_[rotation_]);
 }
 
+void Tetromino::moveLeft() {
+    moveInput_ = MoveInput::LEFT;
+}
+
+void Tetromino::moveRight() {
+    moveInput_ = MoveInput::RIGHT;
+}
+
 void Tetromino::turnLeft() {
     rotation_--;
     rotation_ = rotation_ < 0 ? (ROTATION_SIZE - 1) : rotation_;

@@ -36,8 +36,8 @@ class Tetromino {
         BlockArray getBlocks();
         BlockArray getComputedBlocks();
 
-        void moveLeft() { moveInput_ = MoveInput::LEFT; }
-        void moveRight() { moveInput_ = MoveInput::RIGHT; }
+        void moveLeft();
+        void moveRight();
         void turnLeft();
         void turnRight();
 

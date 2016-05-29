@@ -18,7 +18,7 @@ Tetromino::BlockArray Tetromino::getComputedBlocks() {
         block.x -= pivot_.x;
         block.y -= pivot_.y;
     }
-    return std::move(rotationArray_[rotation_]);
+    return std::move(blocks);
 }
 
 void Tetromino::moveLeft() {

@@ -7,7 +7,10 @@
 - A cada 25 linhas aumentar 1 nível (peça cai mais rápido)
 - Cada linha vale 10 pontos
 - Permitir rotação das peças no sentido horário e anti-horário
+- Se tentar rodar a peça perto da parede, então não roda caso não tenha espaço
 - Quando a peça colar nas outras, uma nova peça aleatória será escolhida
+- O Tetromino só possui dados (componente), o mundo/Tetris (sistema) que possui
+  a lógica
 
 ## Detalhes
 - Rotação (http://tetris.wikia.com/wiki/SRS)

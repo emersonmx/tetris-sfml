@@ -15,7 +15,7 @@ class Game : public Application {
     private:
         void throwExceptionIfNull(State* state);
 
-        State* currentState_ = nullptr;
+        State* currentState_{nullptr};
 };
 
 } /* namespace mxg */

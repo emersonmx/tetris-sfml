@@ -17,8 +17,8 @@ class Application {
         virtual void tick() {}
 
     private:
-        int errorCode_ = 0;
-        bool running_ = true;
+        int errorCode_{0};
+        bool running_{true};
 };
 
 } /* namespace mxg */

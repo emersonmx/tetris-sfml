@@ -21,7 +21,7 @@ class GameObject : public sf::Drawable {
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override {}
 
     private:
-        bool active_ = true;
+        bool active_{true};
 };
 
 } /* namespace tetris */

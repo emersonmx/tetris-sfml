@@ -35,7 +35,7 @@ class DefaultState: public mxg::DefaultState {
     private:
         sf::Clock clock_;
 
-        float timeAccumulator_ = 0.0f;
+        float timeAccumulator_{0.0f};
 };
 
 } /* namespace tetris */

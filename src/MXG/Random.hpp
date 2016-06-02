@@ -27,6 +27,7 @@ class Random {
             std::uniform_real_distribution<> uniform(min, max);
             return uniform(rng);
         }
+
     private:
         unsigned int getDevice();
 };

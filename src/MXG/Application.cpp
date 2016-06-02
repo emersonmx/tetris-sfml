@@ -17,7 +17,7 @@ void Application::exit() {
     exit(0);
 }
 
-void Application::exit(int errorCode) {
+void Application::exit(const int errorCode) {
     errorCode_ = errorCode;
     running_ = false;
 }

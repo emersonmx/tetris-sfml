@@ -10,7 +10,7 @@ class GameObject : public sf::Drawable {
         virtual ~GameObject() {}
 
         bool active() { return active_; }
-        void setActive(bool active) { active_ = active; }
+        void setActive(const bool active) { active_ = active; }
 
         virtual void create() {}
         virtual void destroy() {}

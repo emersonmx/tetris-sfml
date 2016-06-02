@@ -31,7 +31,7 @@ class Tetromino {
         Type type() const { return type_; }
 
         bool fastFall() const { return fastFall_; }
-        void setFastFall(bool fastFall) { fastFall_ = fastFall; }
+        void setFastFall(const bool fastFall) { fastFall_ = fastFall; }
 
         BlockArray getBlocks();
         BlockArray getComputedBlocks();

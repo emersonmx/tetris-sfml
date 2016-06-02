@@ -9,7 +9,7 @@ class Application {
 
         int run();
         void exit();
-        void exit(int errorCode);
+        void exit(const int errorCode);
 
     protected:
         virtual void create() {}

@@ -42,20 +42,13 @@ class Tetromino {
         void turnRight();
 
     private:
-        friend class Tetris;
-
-        enum class MoveInput {
-            LEFT=-1, NONE, RIGHT
-        };
-
         Position position_;
         Pivot pivot_;
         Type type_;
 
-        int rotation_ = 0;
+        int rotation_{0};
         RotationArray rotationArray_{};
-        bool fastFall_ = false;
-        MoveInput moveInput_ = MoveInput::NONE;
+        bool fastFall_{false};
 };
 
 } /* namespace tetris */

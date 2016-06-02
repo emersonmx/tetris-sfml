@@ -22,11 +22,11 @@ Tetromino::BlockArray Tetromino::getComputedBlocks() {
 }
 
 void Tetromino::moveLeft() {
-    moveInput_ = MoveInput::LEFT;
+    position_.x--;
 }
 
 void Tetromino::moveRight() {
-    moveInput_ = MoveInput::RIGHT;
+    position_.x++;
 }
 
 void Tetromino::turnLeft() {

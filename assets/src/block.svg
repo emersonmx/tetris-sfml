@@ -21,7 +21,6 @@
   <defs
      id="defs4">
     <linearGradient
-       inkscape:collect="always"
        id="linearGradient4414"
        osb:paint="gradient">
       <stop
@@ -50,9 +49,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="15.839192"
-     inkscape:cx="14.699664"
-     inkscape:cy="11.645555"
+     inkscape:zoom="7.919596"
+     inkscape:cx="6.6902093"
+     inkscape:cy="18.372292"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -73,7 +72,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -92,9 +91,9 @@
     <rect
        style="fill:url(#linearGradient4430);fill-opacity:1;stroke:none"
        id="rect3336"
-       width="30"
-       height="30"
-       x="163.85715"
-       y="167.64792" />
+       width="28"
+       height="28"
+       x="164.85715"
+       y="168.64792" />
   </g>
 </svg>

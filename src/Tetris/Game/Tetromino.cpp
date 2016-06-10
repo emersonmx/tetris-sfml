@@ -15,8 +15,8 @@ Tetromino::BlockArray Tetromino::getBlocks() {
 Tetromino::BlockArray Tetromino::getComputedBlocks() {
     BlockArray blocks{rotationArray_[rotation_]};
     for (auto& block : blocks) {
-        block.x -= pivot_.x;
-        block.y -= pivot_.y;
+        block.x = position_.x + block.x - pivot_.x;
+        block.y = position_.y + block.y - pivot_.y;
     }
     return std::move(blocks);
 }

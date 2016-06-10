@@ -116,8 +116,8 @@ class Game : public mxg::Application {
             sf::Sprite& spr = sprites_[static_cast<int>(Sprite::CURRENT_TETROMINO)];
             for (auto& block : blocks) {
                 spr.setPosition(sf::Vector2f(
-                    (position.x + block.x) * TILE_SIZE,
-                    (position.y + block.y) * TILE_SIZE
+                    block.x * TILE_SIZE,
+                    block.y * TILE_SIZE
                 ));
                 window_.draw(spr);
             }

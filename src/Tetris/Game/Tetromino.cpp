@@ -21,22 +21,19 @@ Tetromino::BlockArray Tetromino::getComputedBlocks() {
     return std::move(blocks);
 }
 
-void Tetromino::moveLeft() {
-    position_.x--;
-}
-
-void Tetromino::moveRight() {
-    position_.x++;
+void Tetromino::move(const Position& position) {
+    position_.x += position.x;
+    position_.y += position.y;
 }
 
 void Tetromino::turnLeft() {
     rotation_--;
-    rotation_ = rotation_ < 0 ? (ROTATION_SIZE - 1) : rotation_;
+    rotation_ = rotation_ < 0 ? (static_cast<int>(Direction::SIZE) - 1) : rotation_;
 }
 
 void Tetromino::turnRight() {
     rotation_++;
-    rotation_ = rotation_ % ROTATION_SIZE;
+    rotation_ = rotation_ % static_cast<int>(Direction::SIZE);
 }
 
 } /* namespace tetris */

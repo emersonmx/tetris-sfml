@@ -34,9 +34,11 @@ void printType(const Tetromino::Type& type) {
 }
 
 void printTetrominoAttr(const Tetromino& tetromino) {
-    std::cout << "Position: " << tetromino.x() << ", " << tetromino.y() << std::endl;
+    Tetromino::Position position = tetromino.position();
+    Tetromino::Pivot pivot = tetromino.pivot();
+    std::cout << "Position: " << position.x << ", " << position.y << std::endl;
     printType(tetromino.type());
-    std::cout << "Pivot: " << tetromino.pivot().x << ", " << tetromino.pivot().y << std::endl;
+    std::cout << "Pivot: " << pivot.x << ", " << pivot.y << std::endl;
 }
 
 void printTetromino(Tetromino& tetromino) {

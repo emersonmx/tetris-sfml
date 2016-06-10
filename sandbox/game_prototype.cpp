@@ -19,10 +19,10 @@ class Game : public mxg::Application {
         };
         unsigned int FRAMES_PER_SECOND{60};
         float TIME_STEP{static_cast<float>(1.0f / FRAMES_PER_SECOND)};
-        enum class Texture : int {
+        enum class Texture {
             BLOCK, SIZE
         };
-        enum class Sprite : int {
+        enum class Sprite {
             CURRENT_TETROMINO, SIZE
         };
 

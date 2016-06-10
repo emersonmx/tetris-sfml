@@ -30,7 +30,7 @@ class Game : public mxg::Application {
         void create() override {
             createWindow();
             loadAssets();
-            setupWorld();
+            setupTetrominoes();
             setupObjects();
         }
 
@@ -103,8 +103,8 @@ class Game : public mxg::Application {
 
         void update() {
             dropDelay_ += TIME_STEP;
-            if (dropDelay_ >= 1) {
-                dropDelay_ = 0;
+            if (dropDelay_ >= 1.0f || (currentTetromino_.fastFall() && dropDelay_ >= 0.05)) {
+                dropDelay_ = 0.0f;
                 currentTetromino_.move({0, 1});
             }
         }
@@ -124,7 +124,7 @@ class Game : public mxg::Application {
             window_.display();
         }
 
-        void setupWorld() {
+        void setupTetrominoes() {
             tetris::Tetromino tetrominoI{{
                 tetris::Tetromino::BlockArray {{
                     {0, 1}, {1, 1}, {2, 1}, {3, 1}

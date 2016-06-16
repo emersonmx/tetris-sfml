@@ -2,7 +2,7 @@
 
 #include <SFML/Window/VideoMode.hpp>
 
-#include "MXG/DefaultState.hpp"
+#include "mxg/DefaultState.hpp"
 #include "Tetris/States/GameState.hpp"
 
 namespace tetris {
@@ -24,7 +24,7 @@ void Application::destroy() {
 }
 
 void Application::tick() {
-    currentState()->tick();
+    state()->tick();
 }
 
 mxg::State* Application::getState(const std::string& name) {

@@ -76,9 +76,8 @@ add_executable(${PROJECT_NAME}
     src/Tetris/Assets.cpp
     src/Tetris/Utils.cpp
 
-    src/MXG/Application.cpp
-    src/MXG/Game.cpp
-    src/MXG/Random.cpp
+    src/mxg/Application.cpp
+    src/mxg/Game.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}

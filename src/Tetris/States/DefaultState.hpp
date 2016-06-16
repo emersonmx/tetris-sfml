@@ -5,7 +5,7 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
-#include "MXG/DefaultState.hpp"
+#include "mxg/DefaultState.hpp"
 
 namespace tetris {
 

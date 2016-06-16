@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "MXG/Application.hpp"
+#include "mxg/Application.hpp"
 #include "Tetris/Game/Tetromino.hpp"
 
 class Game : public mxg::Application {

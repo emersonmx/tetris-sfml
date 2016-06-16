@@ -7,7 +7,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
 
-#include <MXG/Game.hpp>
+#include <mxg/Game.hpp>
 
 #include "Tetris/Assets.hpp"
 

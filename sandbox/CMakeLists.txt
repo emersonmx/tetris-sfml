@@ -13,7 +13,6 @@ target_link_libraries(blocks ${EXTRA_LIBS})
 
 add_executable(game_prototype
     game_prototype.cpp
-    ${PROJECT_SOURCE_DIR}/src/mxg/Application.cpp
     ${PROJECT_SOURCE_DIR}/src/Tetris/Game/Tetromino.cpp
 )
 target_link_libraries(game_prototype ${EXTRA_LIBS})

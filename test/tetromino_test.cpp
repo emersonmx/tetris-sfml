@@ -35,7 +35,7 @@ void printType(const Tetromino::Type& type) {
 
 void printTetrominoAttr(const Tetromino& tetromino) {
     Tetromino::Position position = tetromino.position();
-    Tetromino::Pivot pivot = tetromino.pivot();
+    Tetromino::Position pivot = tetromino.pivot();
     std::cout << "Position: " << position.x << ", " << position.y << std::endl;
     printType(tetromino.type());
     std::cout << "Pivot: " << pivot.x << ", " << pivot.y << std::endl;
@@ -46,12 +46,12 @@ void printTetromino(Tetromino& tetromino) {
     area.fill('.');
 
     for (auto block : tetromino.getBlocks()) {
-        area[block.y * 4 + block.x] = '#';
+        area[block.x * 4 + block.y] = '#';
     }
 
     for (int i = 0; i < 4; ++i) {
         for (int j = 0; j < 4; ++j) {
-            std::cout << area[i * 4 + j];
+            std::cout << area[j * 4 + i];
         }
         std::cout << std::endl;
     }
@@ -77,23 +77,17 @@ void printDirection(int rotation) {
 }
 
 int main() {
-    Tetromino t{{
-        Tetromino::BlockArray {{
-            {0, 2}, {1, 2}, {2, 2}, {1, 1}
-        }},
-        Tetromino::BlockArray {{
-            {1, 1}, {1, 2}, {1, 3}, {2, 2}
-        }},
-        Tetromino::BlockArray {{
-            {0, 2}, {1, 2}, {2, 2}, {1, 3}
-        }},
-        Tetromino::BlockArray {{
-            {1, 1}, {1, 2}, {1, 3}, {0, 2}
-        }},
-    }, {0, 0}, Tetromino::Type::T};
+    Tetromino t{};
+    t.loadRotationsFromIntArray({
+        // T
+        5,8,9,10,
+        5,9,10,13,
+        8,9,10,13,
+        5,8,9,13
+    });
 
     std::cout << "Attributes" << std::endl;
-    printTetrominoAttr(t);
+    printTetromino(t);
     std::cout << std::endl;
 
     std::cout << "TEST turnRight()" << std::endl;

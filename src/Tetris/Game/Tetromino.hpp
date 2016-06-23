@@ -2,7 +2,6 @@
 #define TETRIS_GAME_TETROMINO_HPP_
 
 #include <array>
-#include <vector>
 
 namespace tetris {
 
@@ -39,17 +38,14 @@ class Tetromino {
         void setRotationArray(const RotationArray& rotationArray) {
             rotationArray_ = rotationArray;
         }
-        bool fastFall() const { return fastFall_; }
-        void setFastFall(const bool fastFall) { fastFall_ = fastFall; }
+        BlockArray blocks();
+        BlockArray computedBlocks();
 
         void loadRotationsFromIntArray(const RotationIntArray& blocks);
 
-        BlockArray getBlocks();
-        BlockArray getComputedBlocks();
-
         void move(const Position& position);
-        void turnLeft();
-        void turnRight();
+        void rotateLeft();
+        void rotateRight();
 
     private:
         using BlockIntArray = std::array<int, BLOCK_SIZE>;
@@ -62,7 +58,6 @@ class Tetromino {
 
         int rotation_{0};
         RotationArray rotationArray_{};
-        bool fastFall_{false};
 };
 
 } /* namespace tetris */

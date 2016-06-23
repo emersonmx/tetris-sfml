@@ -16,11 +16,11 @@ void Tetromino::loadRotationsFromIntArray(const RotationIntArray& blocks) {
     }
 }
 
-Tetromino::BlockArray Tetromino::getBlocks() {
+Tetromino::BlockArray Tetromino::blocks() {
     return rotationArray_[rotation_];
 }
 
-Tetromino::BlockArray Tetromino::getComputedBlocks() {
+Tetromino::BlockArray Tetromino::computedBlocks() {
     BlockArray blocks{rotationArray_[rotation_]};
     for (auto& block : blocks) {
         block.x = position_.x + block.x - pivot_.x;
@@ -34,12 +34,12 @@ void Tetromino::move(const Position& position) {
     position_.y += position.y;
 }
 
-void Tetromino::turnLeft() {
+void Tetromino::rotateLeft() {
     rotation_--;
     rotation_ = rotation_ < 0 ? (static_cast<int>(Direction::SIZE) - 1) : rotation_;
 }
 
-void Tetromino::turnRight() {
+void Tetromino::rotateRight() {
     rotation_++;
     rotation_ = rotation_ % static_cast<int>(Direction::SIZE);
 }

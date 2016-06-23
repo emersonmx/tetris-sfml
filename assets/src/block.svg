@@ -21,6 +21,18 @@
   <defs
      id="defs4">
     <linearGradient
+       osb:paint="gradient"
+       id="linearGradient4145">
+      <stop
+         style="stop-color:#4d4d4d;stop-opacity:1"
+         offset="0"
+         id="stop4149" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop4147" />
+    </linearGradient>
+    <linearGradient
        id="linearGradient4414"
        osb:paint="gradient">
       <stop
@@ -41,6 +53,15 @@
        x2="193.85715"
        y2="197.54767"
        gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4145"
+       id="linearGradient3343"
+       gradientUnits="userSpaceOnUse"
+       x1="163.98341"
+       y1="167.87444"
+       x2="193.85715"
+       y2="197.54767" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -49,9 +70,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="7.919596"
-     inkscape:cx="6.6902093"
-     inkscape:cy="18.372292"
+     inkscape:zoom="5.6568543"
+     inkscape:cx="65.198939"
+     inkscape:cy="32.09268"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -82,18 +103,25 @@
      id="layer1"
      transform="translate(-162.85715,-166.64792)">
     <rect
-       y="166.64792"
-       x="162.85715"
-       height="32"
-       width="32"
+       y="168.64792"
+       x="164.85715"
+       height="30"
+       width="30"
        id="rect3466"
-       style="fill:#333333;fill-opacity:1;stroke:none" />
+       style="fill:#1a1a1a;fill-opacity:1;stroke:none" />
     <rect
        style="fill:url(#linearGradient4430);fill-opacity:1;stroke:none"
        id="rect3336"
-       width="28"
-       height="28"
-       x="164.85715"
-       y="168.64792" />
+       width="30"
+       height="30"
+       x="162.85715"
+       y="166.64792" />
+    <rect
+       y="169.29958"
+       x="166.21591"
+       height="24.696699"
+       width="23.282486"
+       id="rect3341"
+       style="fill:url(#linearGradient3343);fill-opacity:1;stroke:none" />
   </g>
 </svg>

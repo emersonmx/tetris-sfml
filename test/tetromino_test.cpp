@@ -45,7 +45,7 @@ void printTetromino(Tetromino& tetromino) {
     std::array<char, 16> area;
     area.fill('.');
 
-    for (auto block : tetromino.getBlocks()) {
+    for (auto block : tetromino.blocks()) {
         area[block.x * 4 + block.y] = '#';
     }
 
@@ -90,24 +90,24 @@ int main() {
     printTetromino(t);
     std::cout << std::endl;
 
-    std::cout << "TEST turnRight()" << std::endl;
+    std::cout << "TEST rotateRight()" << std::endl;
     for (int i = 0; i < 4; ++i) {
         std::cout << "Direction ";
         printDirection(i % 4);
         std::cout << std::endl;
         printTetromino(t);
         std::cout << std::endl;
-        t.turnRight();
+        t.rotateRight();
     }
 
-    std::cout << "TEST turnLeft()" << std::endl;
+    std::cout << "TEST rotateLeft()" << std::endl;
     for (int i = 0; i < 4; ++i) {
         std::cout << "Direction ";
         printDirection((4 - i) % 4);
         std::cout << std::endl;
         printTetromino(t);
         std::cout << std::endl;
-        t.turnLeft();
+        t.rotateLeft();
     }
 
     return 0;

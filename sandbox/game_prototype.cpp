@@ -124,7 +124,7 @@ int main() {
         currentTetrominoCopy = currentTetromino;
 
         currentTetromino.move({inputMovement, 0});
-        if (hasCollisions(currentTetromino.computedBlocks(), world)) {
+        if (hasCollisions(currentTetromino.blocks(), world)) {
             currentTetromino = currentTetrominoCopy;
         }
 
@@ -133,7 +133,7 @@ int main() {
         } else if (inputRotation > 0) {
             currentTetromino.rotateRight();
         }
-        if (hasCollisions(currentTetromino.computedBlocks(), world)) {
+        if (hasCollisions(currentTetromino.blocks(), world)) {
             currentTetromino = currentTetrominoCopy;
         }
 
@@ -142,10 +142,10 @@ int main() {
 
             tetris::Tetromino::Position fallMovement{0, 1};
             currentTetromino.move(fallMovement);
-            tetris::Tetromino::BlockArray previewBlocks = currentTetromino.computedBlocks();
+            tetris::Tetromino::BlockArray previewBlocks = currentTetromino.blocks();
 
             if (hasCollisions(previewBlocks, world)) {
-                for (auto block : currentTetrominoCopy.computedBlocks()) {
+                for (auto block : currentTetrominoCopy.blocks()) {
                     world[block.y * WORLD_WIDTH + block.x] = true;
                 }
                 currentTetromino = nextTetromino(blockData);
@@ -173,7 +173,7 @@ int main() {
         // Draw
         window.clear(sf::Color::White);
 
-        tetris::Tetromino::BlockArray tetrominoBlocks = currentTetromino.computedBlocks();
+        tetris::Tetromino::BlockArray tetrominoBlocks = currentTetromino.blocks();
         for (auto& block : tetrominoBlocks) {
             blockSprite.setPosition(block.x * TILE_SIZE, block.y * TILE_SIZE);
             blockSprite.setColor(sf::Color::Green);

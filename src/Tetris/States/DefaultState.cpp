@@ -10,19 +10,9 @@ namespace tetris {
 
 void DefaultState::tick() {
     beginTick();
-
-    sf::Time time = clock_.restart();
-
     processEvents();
-
-    timeAccumulator_ += time.asSeconds();
-    if (timeAccumulator_ >= TIME_STEP) {
-        update();
-        timeAccumulator_ -= TIME_STEP;
-    }
-
+    update();
     render();
-
     endTick();
 }
 

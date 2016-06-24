@@ -2,24 +2,35 @@
 #define TETRIS_APPLICATION_HPP_
 
 #include <memory>
-#include <unordered_map>
+#include <array>
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
 
 #include <mxg/Game.hpp>
 
+#include "Tetris/Defs.hpp"
 #include "Tetris/Assets.hpp"
+#include "Tetris/Game/Tetris.hpp"
 
 namespace tetris {
 
 class Application : public mxg::Game {
     public:
-        static const int WINDOW_WIDTH = 640;
-        static const int WINDOW_HEIGHT = 480;
+        enum class State {
+            MENU, GAME, GAME_MENU, SIZE
+        };
+
+        static const int TILE_SIZE{32};
+        static const int WINDOW_WIDTH{Tetris::WORLD_WIDTH * TILE_SIZE};
+        static const int WINDOW_HEIGHT{Tetris::WORLD_HEIGHT * TILE_SIZE};
+        static const int FRAMES_PER_SECOND{60};
 
         sf::RenderWindow& window() { return window_; }
         Assets& assets() { return assets_; }
+
+        mxg::State* getState(const State state);
+        void changeState(const State state);
 
     protected:
         void create() override;
@@ -27,15 +38,11 @@ class Application : public mxg::Game {
 
         void tick() override;
 
-        mxg::State* getState(const std::string& name);
-
-        void changeState(const std::string& name);
-
         sf::RenderWindow window_;
         Assets assets_;
 
     private:
-        std::unordered_map< std::string, std::unique_ptr<mxg::State> > states_;
+        PtrArray<mxg::State, static_cast<int>(State::SIZE)> states_;
 };
 
 } /* namespace tetris */

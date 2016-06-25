@@ -15,7 +15,7 @@ constexpr const int WINDOW_WIDTH{WORLD_WIDTH * TILE_SIZE};
 constexpr const int WINDOW_HEIGHT{WORLD_HEIGHT * TILE_SIZE};
 constexpr const int FRAMES_PER_SECOND{60};
 
-using WorldBlockArray = std::array<bool, WORLD_WIDTH * WORLD_HEIGHT>;
+using WorldBlockArray = std::array<int, WORLD_WIDTH * WORLD_HEIGHT>;
 using BlockDataArray = std::array<tetris::Tetromino::RotationIntArray, 7>;
 
 bool hasCollisions(const tetris::Tetromino::BlockArray& blocks, const WorldBlockArray& world);
@@ -40,7 +40,16 @@ int main() {
     float timer = 0.0f, delay = 0.8f;
     int inputRotation = 0;
     int inputMovement = 0;
-    WorldBlockArray world{0};
+    std::array<sf::Color, 7> colors{
+        sf::Color::Cyan,
+        sf::Color(128, 0, 128),
+        sf::Color::Magenta,
+        sf::Color(128, 128, 128),
+        sf::Color::Green,
+        sf::Color::Yellow,
+        sf::Color::Red
+    };
+    WorldBlockArray world{};
 
     BlockDataArray blockData{{
         {{
@@ -146,7 +155,8 @@ int main() {
 
             if (hasCollisions(previewBlocks, world)) {
                 for (auto block : currentTetrominoCopy.blocks()) {
-                    world[block.y * WORLD_WIDTH + block.x] = true;
+                    int type = static_cast<int>(currentTetromino.type()) + 1;
+                    world[block.y * WORLD_WIDTH + block.x] = type;
                 }
                 currentTetromino = nextTetromino(blockData);
             }
@@ -157,7 +167,7 @@ int main() {
         for (int i = WORLD_HEIGHT - 1; i > 0; --i) {
             int count = 0;
             for (int j = 0; j < WORLD_WIDTH; ++j) {
-                if (world.at(i * WORLD_WIDTH + j)) {
+                if (world.at(i * WORLD_WIDTH + j) > 0) {
                     count++;
                 }
                 world[k * WORLD_WIDTH + j] = world[i * WORLD_WIDTH + j];
@@ -175,20 +185,21 @@ int main() {
 
         tetris::Tetromino::BlockArray tetrominoBlocks = currentTetromino.blocks();
         for (auto& block : tetrominoBlocks) {
+            int colorType = static_cast<int>(currentTetromino.type());
             blockSprite.setPosition(block.x * TILE_SIZE, block.y * TILE_SIZE);
-            blockSprite.setColor(sf::Color::Green);
+            blockSprite.setColor(colors[colorType]);
             window.draw(blockSprite);
         }
 
         for (std::size_t i = 0; i < world.size(); ++i) {
-            bool value = world.at(i);
-            if (!value) {
+            auto value = world.at(i);
+            if (value == 0) {
                 continue;
             }
             int x = (i % WORLD_WIDTH) * TILE_SIZE;
             int y = static_cast<int>(i / WORLD_WIDTH) * TILE_SIZE;
             blockSprite.setPosition(x, y);
-            blockSprite.setColor(sf::Color::Red);
+            blockSprite.setColor(colors[value - 1]);
             window.draw(blockSprite);
         }
 
@@ -205,7 +216,7 @@ bool hasCollisions(const tetris::Tetromino::BlockArray& blocks, const WorldBlock
         if (block.y < 0 || block.y >= WORLD_HEIGHT) {
             return true;
         }
-        if (world.at(block.y * WORLD_WIDTH + block.x)) {
+        if (world.at(block.y * WORLD_WIDTH + block.x) > 0) {
             return true;
         }
     }
@@ -215,6 +226,7 @@ bool hasCollisions(const tetris::Tetromino::BlockArray& blocks, const WorldBlock
 tetris::Tetromino nextTetromino(const BlockDataArray& blockData) {
     int index = rand() % static_cast<int>(tetris::Tetromino::Type::SIZE);
     tetris::Tetromino tetromino;
+    tetromino.setType(static_cast<tetris::Tetromino::Type>(index));
     tetromino.loadRotationsFromIntArray(blockData.at(index));
     tetromino.move({4, 1});
     return tetromino;

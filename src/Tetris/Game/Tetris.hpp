@@ -8,24 +8,26 @@ namespace tetris {
 
 class Tetris {
     public:
-        class Listener {
-            public:
-                virtual ~Listener() {}
+        static const int WORLD_WIDTH{10};
+        static const int WORLD_HEIGHT{18};
 
-                virtual void gameStarted(Tetris* tetris) {}
-                virtual void gameOver(Tetris* tetris) {}
-
-                virtual void tetrominoUpdated(const Tetromino& tetromino) {}
-                virtual void tetrominoFixed(const Tetromino& tetromino) {}
-                virtual void linesErased(int start, int end) {}
-        };
-
+        using WorldBlockArray = Matrix<int, WORLD_WIDTH, WORLD_HEIGHT>;
         enum class InputDirection {
             LEFT=-1, NONE, RIGHT
         };
 
-        static const int WORLD_WIDTH{10};
-        static const int WORLD_HEIGHT{18};
+        class Listener {
+            public:
+                virtual ~Listener() {}
+
+                virtual void gameStarted(Tetris& tetris) {}
+                virtual void gameOver(Tetris& tetris) {}
+
+                virtual void scoreUpdated(const int score) {}
+
+                virtual void tetrominoUpdated(const Tetromino& tetromino) {}
+                virtual void tetrominoFixed(const WorldBlockArray& worldBlockArray) {}
+        };
 
         InputDirection inputMovement() { return inputMovement_; }
         void setInputMovement(const InputDirection movement) {
@@ -63,7 +65,7 @@ class Tetris {
         void setupBlockDataArray();
 
         BlockDataArray blockDataArray_{};
-        Matrix<bool, WORLD_WIDTH, WORLD_HEIGHT> worldBlocks_{};
+        WorldBlockArray worldBlockArray_{};
         Tetromino currentTetromino_{};
         Tetromino currentTetrominoCopy_{};
 
@@ -74,6 +76,7 @@ class Tetris {
         float delay_{DEFAULT_DELAY};
 
         bool gameOver_{false};
+        int score_{0};
 };
 
 } /* namespace tetris */

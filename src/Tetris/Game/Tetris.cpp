@@ -9,7 +9,7 @@ void Tetris::create() {
 
 void Tetris::destroy() {
     blockDataArray_ = {};
-    worldBlocks_ = {};
+    worldBlockArray_ = {};
     currentTetromino_ = {};
     currentTetrominoCopy_ = {};
 
@@ -64,7 +64,8 @@ void Tetris::moveDownTetromino() {
 
         if (hasCollisions()) {
             for (auto block : currentTetrominoCopy_.blocks()) {
-                worldBlocks_[block.x][block.y] = true;
+                int type = static_cast<int>(currentTetromino_.type()) + 1;
+                worldBlockArray_[block.x][block.y] = type;
             }
             nextTetromino();
         }
@@ -77,10 +78,10 @@ void Tetris::eraseLines() {
     for (int i = WORLD_HEIGHT - 1; i > 0; --i) {
         int count = 0;
         for (int j = 0; j < WORLD_WIDTH; ++j) {
-            if (worldBlocks_[i][j]) {
+            if (worldBlockArray_[i][j] > 0) {
                 count++;
             }
-            worldBlocks_[k][j] = worldBlocks_[i][j];
+            worldBlockArray_[k][j] = worldBlockArray_[i][j];
         }
         if (count < WORLD_WIDTH) {
             k--;
@@ -104,7 +105,7 @@ bool Tetris::hasCollisions() {
         if (block.y < 0 || block.y >= WORLD_HEIGHT) {
             return true;
         }
-        if (worldBlocks_[block.x][block.y]) {
+        if (worldBlockArray_[block.x][block.y] > 0) {
             return true;
         }
     }
@@ -115,6 +116,7 @@ bool Tetris::hasCollisions() {
 void Tetris::nextTetromino() {
     int index = rand() % static_cast<int>(Tetromino::Type::SIZE);
     Tetromino tetromino;
+    tetromino.setType(static_cast<tetris::Tetromino::Type>(index));
     tetromino.loadRotationsFromIntArray(blockDataArray_[index]);
     tetromino.move({4, 1});
 

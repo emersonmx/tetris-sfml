@@ -12,7 +12,14 @@ class Assets {
     public:
         virtual ~Assets() {}
 
+        sf::Texture& block() { return block_; }
+
         void loadAssets();
+
+    private:
+        sf::Texture& loadTextureFromFile(const std::string& filename);
+
+        sf::Texture block_;
 };
 
 } /* namespace tetris */

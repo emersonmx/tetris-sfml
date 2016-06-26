@@ -5,6 +5,7 @@
 
 #include "Tetris/States/DefaultState.hpp"
 #include "Tetris/Game/Tetris.hpp"
+#include "Tetris/BlockRenderer.hpp"
 
 namespace tetris {
 
@@ -23,6 +24,7 @@ class GameState : public DefaultState {
 
     private:
         Tetris world_{};
+        BlockRenderer blockRenderer_{};
 
         sf::Clock clock_;
         float deltaTime_{0.0f};

@@ -33,7 +33,7 @@ class Tetromino {
         void setPivot(const Position& pivot) { pivot_ = pivot; }
         Type type() const { return type_; }
         void setType(const Type type) { type_ = type; }
-        BlockArray blocks();
+        BlockArray blocks() const;
 
         void loadRotationsFromIntArray(const RotationIntArray& blocks);
 

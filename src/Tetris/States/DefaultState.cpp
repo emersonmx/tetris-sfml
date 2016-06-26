@@ -26,7 +26,7 @@ void DefaultState::processEvents() {
 
 void DefaultState::render() {
     sf::RenderWindow& window = app_->window();
-    window.clear();
+    window.clear(sf::Color(64, 64, 64));
     render(window);
     window.display();
 }

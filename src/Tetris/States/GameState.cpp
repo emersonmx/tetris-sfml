@@ -1,10 +1,15 @@
 #include "Tetris/States/GameState.hpp"
 
+#include <iostream>
+
 #include "Tetris/Application.hpp"
 
 namespace tetris {
 
 void GameState::create() {
+    blockRenderer_.create(app()->assets());
+
+    world_.addListener(&blockRenderer_);
     world_.create();
 }
 
@@ -39,6 +44,7 @@ void GameState::update() {
 }
 
 void GameState::render(sf::RenderTarget& renderTarget) {
+    renderTarget.draw(blockRenderer_);
 }
 
 } /* namespace tetris */

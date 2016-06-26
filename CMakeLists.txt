@@ -71,6 +71,7 @@ add_executable(${PROJECT_NAME}
     src/Tetris/Game/Tetromino.cpp
 
     src/Tetris/Application.cpp
+    src/Tetris/BlockRenderer.cpp
     src/Tetris/States/DefaultState.cpp
     src/Tetris/States/GameState.cpp
     src/Tetris/Assets.cpp

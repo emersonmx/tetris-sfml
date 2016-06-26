@@ -1,6 +1,8 @@
 #ifndef TETRIS_GAME_TETRIS_HPP_
 #define TETRIS_GAME_TETRIS_HPP_
 
+#include <vector>
+
 #include "Tetris/Defs.hpp"
 #include "Tetris/Game/Tetromino.hpp"
 
@@ -11,7 +13,7 @@ class Tetris {
         static const int WORLD_WIDTH{10};
         static const int WORLD_HEIGHT{18};
 
-        using WorldBlockArray = Matrix<int, WORLD_WIDTH, WORLD_HEIGHT>;
+        using WorldBlockArray = Matrix<int, WORLD_HEIGHT, WORLD_WIDTH>;
         enum class InputDirection {
             LEFT=-1, NONE, RIGHT
         };
@@ -26,7 +28,7 @@ class Tetris {
                 virtual void scoreUpdated(const int score) {}
 
                 virtual void tetrominoUpdated(const Tetromino& tetromino) {}
-                virtual void tetrominoFixed(const WorldBlockArray& worldBlockArray) {}
+                virtual void worldUpdated(const WorldBlockArray& worldBlockArray) {}
         };
 
         InputDirection inputMovement() { return inputMovement_; }
@@ -44,6 +46,10 @@ class Tetris {
         void destroy();
 
         void update(const float deltaTime);
+
+        void addListener(Listener* listener);
+        void removeListener(Listener* listener);
+        void clearListeners();
 
     private:
         using BlockDataArray = std::array<Tetromino::RotationIntArray,
@@ -64,6 +70,13 @@ class Tetris {
         void nextTetromino();
         void setupBlockDataArray();
 
+        void fireGameStarted();
+        void fireGameOver();
+        void fireScoreUpdated();
+        void fireTetrominoUpdated();
+        void fireWorldUpdated();
+        void throwExceptionIfNull(Listener* listener);
+
         BlockDataArray blockDataArray_{};
         WorldBlockArray worldBlockArray_{};
         Tetromino currentTetromino_{};
@@ -77,6 +90,8 @@ class Tetris {
 
         bool gameOver_{false};
         int score_{0};
+
+        std::vector<Listener*> listeners_{};
 };
 
 } /* namespace tetris */

@@ -37,7 +37,7 @@ void Game::changeState(State* state) {
 
 void Game::throwExceptionIfNull(State* state) {
     if (state == nullptr) {
-        throw std::invalid_argument("state can be null.");
+        throw std::invalid_argument("state can't be null.");
     }
 }
 

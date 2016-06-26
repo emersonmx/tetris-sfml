@@ -16,13 +16,13 @@ void Tetromino::loadRotationsFromIntArray(const RotationIntArray& blocks) {
     }
 }
 
-Tetromino::BlockArray Tetromino::blocks() {
+Tetromino::BlockArray Tetromino::blocks() const {
     BlockArray blocks{rotationArray_[rotation_]};
     for (auto& block : blocks) {
         block.x = position_.x + block.x - pivot_.x;
         block.y = position_.y + block.y - pivot_.y;
     }
-    return std::move(blocks);
+    return blocks;
 }
 
 void Tetromino::move(const Position& position) {

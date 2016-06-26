@@ -1,10 +1,17 @@
 #include "Tetris/Game/Tetris.hpp"
 
+#include <ctime>
+#include <stdexcept>
+#include <algorithm>
+
 namespace tetris {
 
 void Tetris::create() {
+    srand(time(0));
+
     setupBlockDataArray();
     nextTetromino();
+    fireGameStarted();
 }
 
 void Tetris::destroy() {
@@ -36,6 +43,24 @@ void Tetris::update(const float deltaTime) {
     delay_ = DEFAULT_DELAY;
 }
 
+void Tetris::addListener(Listener* listener) {
+    throwExceptionIfNull(listener);
+
+    listeners_.push_back(listener);
+}
+
+void Tetris::removeListener(Listener* listener) {
+    throwExceptionIfNull(listener);
+
+    listeners_.erase(
+        std::remove(listeners_.begin(), listeners_.end(), listener)
+    );
+}
+
+void Tetris::clearListeners() {
+    listeners_.clear();
+}
+
 void Tetris::moveTetromino() {
     int movement = static_cast<int>(inputMovement_);
     currentTetromino_.move({movement, 0});
@@ -45,9 +70,9 @@ void Tetris::moveTetromino() {
 }
 
 void Tetris::rotateTetromino() {
-    if (inputMovement_ == InputDirection::LEFT) {
+    if (inputRotation_ == InputDirection::LEFT) {
         currentTetromino_.rotateLeft();
-    } else if (inputMovement_ == InputDirection::RIGHT) {
+    } else if (inputRotation_ == InputDirection::RIGHT) {
         currentTetromino_.rotateRight();
     }
     if (hasCollisions()) {
@@ -65,12 +90,17 @@ void Tetris::moveDownTetromino() {
         if (hasCollisions()) {
             for (auto block : currentTetrominoCopy_.blocks()) {
                 int type = static_cast<int>(currentTetromino_.type()) + 1;
-                worldBlockArray_[block.x][block.y] = type;
+                worldBlockArray_[block.y][block.x] = type;
             }
             nextTetromino();
         }
         timer_ = 0.0f;
     }
+
+    eraseLines();
+
+    fireWorldUpdated();
+    fireTetrominoUpdated();
 }
 
 void Tetris::eraseLines() {
@@ -105,7 +135,7 @@ bool Tetris::hasCollisions() {
         if (block.y < 0 || block.y >= WORLD_HEIGHT) {
             return true;
         }
-        if (worldBlockArray_[block.x][block.y] > 0) {
+        if (worldBlockArray_[block.y][block.x] > 0) {
             return true;
         }
     }
@@ -168,6 +198,45 @@ void Tetris::setupBlockDataArray() {
             5,8,9,12
         }}
     }};
+}
+
+void Tetris::fireGameStarted() {
+    for (auto listener : listeners_) {
+        listener->gameStarted(*this);
+    }
+
+    fireTetrominoUpdated();
+    fireWorldUpdated();
+}
+
+void Tetris::fireGameOver() {
+    for (auto listener : listeners_) {
+        listener->gameOver(*this);
+    }
+}
+
+void Tetris::fireScoreUpdated() {
+    for (auto listener : listeners_) {
+        listener->scoreUpdated(score_);
+    }
+}
+
+void Tetris::fireTetrominoUpdated() {
+    for (auto listener : listeners_) {
+        listener->tetrominoUpdated(currentTetromino_);
+    }
+}
+
+void Tetris::fireWorldUpdated() {
+    for (auto listener : listeners_) {
+        listener->worldUpdated(worldBlockArray_);
+    }
+}
+
+void Tetris::throwExceptionIfNull(Listener* listener) {
+    if (listener == nullptr) {
+        throw std::invalid_argument("listener can't be null.");
+    }
 }
 
 } /* namespace tetris */

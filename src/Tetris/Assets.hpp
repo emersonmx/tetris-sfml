@@ -13,13 +13,15 @@ class Assets {
         virtual ~Assets() {}
 
         sf::Texture& block() { return block_; }
+        sf::Texture& background() { return background_; }
 
         void loadAssets();
 
     private:
-        sf::Texture& loadTextureFromFile(const std::string& filename);
+        sf::Texture loadTextureFromFile(const std::string& filename);
 
         sf::Texture block_;
+        sf::Texture background_;
 };
 
 } /* namespace tetris */

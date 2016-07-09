@@ -5,10 +5,11 @@
 namespace tetris {
 
 void Assets::loadAssets() {
-    block_.loadFromFile("assets/block.png");
+    block_ = loadTextureFromFile("assets/block.png");
+    background_ = loadTextureFromFile("assets/background.png");
 }
 
-sf::Texture& Assets::loadTextureFromFile(const std::string& filename) {
+sf::Texture Assets::loadTextureFromFile(const std::string& filename) {
     sf::Texture texture;
     if (!texture.loadFromFile(filename)) {
         std::cout << "Couldn't load \"" << filename << "\"\n";

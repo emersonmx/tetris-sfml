@@ -25,6 +25,7 @@ class GameState : public DefaultState {
     private:
         Tetris world_{};
         BlockRenderer blockRenderer_{};
+        sf::Sprite backgroundSprite_;
 
         sf::Clock clock_;
         float deltaTime_{0.0f};

@@ -8,6 +8,7 @@ namespace tetris {
 
 void GameState::create() {
     blockRenderer_.create(app()->assets());
+    backgroundSprite_.setTexture(app()->assets().background());
 
     world_.addListener(&blockRenderer_);
     world_.create();
@@ -44,6 +45,7 @@ void GameState::update() {
 }
 
 void GameState::render(sf::RenderTarget& renderTarget) {
+    renderTarget.draw(backgroundSprite_);
     renderTarget.draw(blockRenderer_);
 }
 

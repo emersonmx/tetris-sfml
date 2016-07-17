@@ -79,7 +79,7 @@ void GameState::create() {
                 text.setString("Enter to");
                 break;
             case 2:
-                text.setString("pause");
+                text.setString("menu");
                 break;
         }
         aux = Utils::calculateCenterOfRect(text.getLocalBounds());
@@ -121,12 +121,17 @@ void GameState::processEvent(const sf::Event& event) {
         } else if (event.key.code == sf::Keyboard::X) {
             world_.setInputRotation(Tetris::InputDirection::RIGHT);
         }
+        if (event.key.code == sf::Keyboard::Return) {
+            paused_ = !paused_;
+        }
     }
 }
 
 void GameState::update() {
-    world_.setFastFall(sf::Keyboard::isKeyPressed(sf::Keyboard::Down));
-    world_.update(deltaTime_);
+    if (!paused_) {
+        world_.setFastFall(sf::Keyboard::isKeyPressed(sf::Keyboard::Down));
+        world_.update(deltaTime_);
+    }
 }
 
 void GameState::render(sf::RenderTarget& renderTarget) {

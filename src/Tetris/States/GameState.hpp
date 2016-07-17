@@ -41,6 +41,7 @@ class GameState : public DefaultState {
 
         sf::Clock clock_{};
         float deltaTime_{0.0f};
+        bool paused_{false};
 };
 
 } /* namespace tetris */

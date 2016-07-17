@@ -22,8 +22,8 @@ class Application : public mxg::Game {
         };
 
         static const int TILE_SIZE{32};
-        static const int WINDOW_WIDTH{Tetris::WORLD_WIDTH * TILE_SIZE};
-        static const int WINDOW_HEIGHT{Tetris::WORLD_HEIGHT * TILE_SIZE};
+        static const int WINDOW_WIDTH{576};
+        static const int WINDOW_HEIGHT{576};
         static const int FRAMES_PER_SECOND{60};
 
         sf::RenderWindow& window() { return window_; }

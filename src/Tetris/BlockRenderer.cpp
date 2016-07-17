@@ -10,13 +10,13 @@ void BlockRenderer::create(Assets& assets) {
     sf::Texture& blockTexture = assets.block();
 
     colors_ = {
-        sf::Color::Cyan,
-        sf::Color(128, 0, 128),
-        sf::Color::Magenta,
-        sf::Color(128, 128, 128),
-        sf::Color::Green,
-        sf::Color::Yellow,
-        sf::Color::Red
+        sf::Color(17, 60, 81),
+        sf::Color(77, 15, 83),
+        sf::Color(37, 23, 88),
+        sf::Color(86, 119, 20),
+        sf::Color(46, 110, 18),
+        sf::Color(128, 116, 21),
+        sf::Color(128, 21, 21)
     };
 
     for (auto& block : currentTetromino_) {

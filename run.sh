@@ -21,6 +21,12 @@ echo "Building in $BUILD_TYPE mode..."
 make -j3
 popd > /dev/null
 
+echo "Generating assets..."
+pushd assets > /dev/null
+./build_assets.sh
+popd > /dev/null
+echo "Done."
+
 echo "Running..."
 $BUILD_DIR/$EXECUTABLE
 echo "Done."

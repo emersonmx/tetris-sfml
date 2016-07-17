@@ -2,6 +2,8 @@
 #define TETRIS_STATES_GAMESTATE_HPP_
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Text.hpp>
 
 #include "Tetris/States/DefaultState.hpp"
 #include "Tetris/Game/Tetris.hpp"
@@ -25,9 +27,19 @@ class GameState : public DefaultState {
     private:
         Tetris world_{};
         BlockRenderer blockRenderer_{};
-        sf::Sprite backgroundSprite_;
+        sf::Sprite gridSprite_{};
+        sf::RectangleShape gameAreaShape_{};
+        sf::RectangleShape backgroundShape_{};
+        sf::RectangleShape nextShape_{};
 
-        sf::Clock clock_;
+        sf::Text highScoreText_{};
+        sf::Text highScoreValueText_{};
+        sf::Text scoreText_{};
+        sf::Text scoreValueText_{};
+        sf::Text nextText_{};
+        std::array<sf::Text, 3> infoText_{};
+
+        sf::Clock clock_{};
         float deltaTime_{0.0f};
 };
 

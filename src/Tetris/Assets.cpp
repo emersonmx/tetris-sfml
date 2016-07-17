@@ -6,7 +6,9 @@ namespace tetris {
 
 void Assets::loadAssets() {
     block_ = loadTextureFromFile("assets/block.png");
-    background_ = loadTextureFromFile("assets/background.png");
+    grid_ = loadTextureFromFile("assets/grid.png");
+
+    defaultFont_ = loadFontFromFile("assets/PressStart2P.ttf");
 }
 
 sf::Texture Assets::loadTextureFromFile(const std::string& filename) {
@@ -16,6 +18,15 @@ sf::Texture Assets::loadTextureFromFile(const std::string& filename) {
     }
 
     return texture;
+}
+
+sf::Font Assets::loadFontFromFile(const std::string& filename) {
+    sf::Font font;
+    if (!font.loadFromFile(filename)) {
+        std::cout << "Couldn't load \"" << filename << "\"\n";
+    }
+
+    return font;
 }
 
 } /* namespace tetris */

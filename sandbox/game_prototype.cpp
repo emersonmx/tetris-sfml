@@ -133,7 +133,7 @@ int main() {
         currentTetrominoCopy = currentTetromino;
 
         currentTetromino.move({inputMovement, 0});
-        if (hasCollisions(currentTetromino.blocks(), world)) {
+        if (hasCollisions(currentTetromino.getBlocks(), world)) {
             currentTetromino = currentTetrominoCopy;
         }
 
@@ -142,7 +142,7 @@ int main() {
         } else if (inputRotation > 0) {
             currentTetromino.rotateRight();
         }
-        if (hasCollisions(currentTetromino.blocks(), world)) {
+        if (hasCollisions(currentTetromino.getBlocks(), world)) {
             currentTetromino = currentTetrominoCopy;
         }
 
@@ -151,11 +151,11 @@ int main() {
 
             tetris::Tetromino::Position fallMovement{0, 1};
             currentTetromino.move(fallMovement);
-            tetris::Tetromino::BlockArray previewBlocks = currentTetromino.blocks();
+            tetris::Tetromino::BlockArray previewBlocks = currentTetromino.getBlocks();
 
             if (hasCollisions(previewBlocks, world)) {
-                for (auto block : currentTetrominoCopy.blocks()) {
-                    int type = static_cast<int>(currentTetromino.type()) + 1;
+                for (auto block : currentTetrominoCopy.getBlocks()) {
+                    int type = static_cast<int>(currentTetromino.getType()) + 1;
                     world[block.y * WORLD_WIDTH + block.x] = type;
                 }
                 currentTetromino = nextTetromino(blockData);
@@ -183,9 +183,9 @@ int main() {
         // Draw
         window.clear(sf::Color::White);
 
-        tetris::Tetromino::BlockArray tetrominoBlocks = currentTetromino.blocks();
+        tetris::Tetromino::BlockArray tetrominoBlocks = currentTetromino.getBlocks();
         for (auto& block : tetrominoBlocks) {
-            int colorType = static_cast<int>(currentTetromino.type());
+            int colorType = static_cast<int>(currentTetromino.getType());
             blockSprite.setPosition(block.x * TILE_SIZE, block.y * TILE_SIZE);
             blockSprite.setColor(colors[colorType]);
             window.draw(blockSprite);

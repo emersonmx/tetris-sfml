@@ -8,18 +8,12 @@ set(tetris_VERSION_REVISION 0)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-configure_file(
-    "${PROJECT_SOURCE_DIR}/src/Tetris/Config.hpp.in"
-    "${PROJECT_BINARY_DIR}/Config.hpp"
-)
-
-option(BUILD_SANDBOX "Build sandbox code" OFF)
-option(BUILD_TESTS "Build tests" OFF)
-
 # Compiler settings
-if (CMAKE_BUILD_TYPE STREQUAL "")
-    set(CMAKE_BUILD_TYPE Debug)
-endif()
+if (NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug CACHE STRING
+        "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
+        FORCE)
+endif(NOT CMAKE_BUILD_TYPE)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic")
@@ -40,17 +34,18 @@ if (WIN32)
     set(CMAKE_EXE_LINKER_FLAGS "-Wl,--subsystem,windows")
 endif()
 
-# Includes and libraries settings
-include(FindPkgConfig)
+option(BUILD_SANDBOX "Build sandbox code" OFF)
+option(BUILD_TESTS "Build tests" OFF)
 
-# Executable settings
-include_directories(
-    ${PROJECT_SOURCE_DIR}/src
-    ${PROJECT_BINARY_DIR}
+configure_file(
+    "${PROJECT_SOURCE_DIR}/src/Tetris/Config.hpp.in"
+    "${PROJECT_BINARY_DIR}/Config.hpp"
 )
 
+# Build settings
+include_directories("${PROJECT_BINARY_DIR}")
+
 add_subdirectory(src)
-add_subdirectory(lib)
 
 if (BUILD_SANDBOX)
     add_subdirectory(sandbox)

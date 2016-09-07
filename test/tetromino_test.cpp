@@ -1,51 +1,14 @@
-#include <iostream>
+#include "gtest/gtest.h"
+
 #include "Tetris/Game/Tetromino.hpp"
 
 using namespace tetris;
-
-void printType(const Tetromino::Type& type) {
-    std::cout << "Type: ";
-    switch (type) {
-        case Tetromino::Type::I:
-            std::cout << "I";
-            break;
-        case Tetromino::Type::J:
-            std::cout << "J";
-            break;
-        case Tetromino::Type::L:
-            std::cout << "L";
-            break;
-        case Tetromino::Type::O:
-            std::cout << "O";
-            break;
-        case Tetromino::Type::S:
-            std::cout << "S";
-            break;
-        case Tetromino::Type::T:
-            std::cout << "T";
-            break;
-        case Tetromino::Type::Z:
-            std::cout << "Z";
-            break;
-        default:
-            std::cout << "-";
-    }
-    std::cout << std::endl;
-}
-
-void printTetrominoAttr(const Tetromino& tetromino) {
-    Tetromino::Position position = tetromino.position();
-    Tetromino::Position pivot = tetromino.pivot();
-    std::cout << "Position: " << position.x << ", " << position.y << std::endl;
-    printType(tetromino.type());
-    std::cout << "Pivot: " << pivot.x << ", " << pivot.y << std::endl;
-}
 
 void printTetromino(Tetromino& tetromino) {
     std::array<char, 16> area;
     area.fill('.');
 
-    for (auto block : tetromino.blocks()) {
+    for (auto block : tetromino.getBlocks()) {
         area[block.x * 4 + block.y] = '#';
     }
 
@@ -57,58 +20,138 @@ void printTetromino(Tetromino& tetromino) {
     }
 }
 
-void printDirection(int rotation) {
-    switch (rotation) {
-        case 0:
-            std::cout << "Up";
-            break;
-        case 1:
-            std::cout << "Right";
-            break;
-        case 2:
-            std::cout << "Down";
-            break;
-        case 3:
-            std::cout << "Left";
-            break;
-        default:
-            std::cout << "WTF? O,o" << std::endl;
+TEST(TetrominoTest, CreateEmptyTetromino) {
+    Tetromino tetromino{};
+    auto pivot = tetromino.getPivot();
+    bool result = true;
+    for (auto block : tetromino.getBlocks()) {
+        result = result && block.x == -pivot.x && block.y == -pivot.y;
     }
+    ASSERT_TRUE(result);
 }
 
-int main() {
-    Tetromino t{};
-    t.loadRotationsFromIntArray({
+TEST(TetrominoTest, Move) {
+    Tetromino tetromino{};
+
+    tetromino.move({1, 2});
+    auto position = tetromino.getPosition();
+
+    ASSERT_TRUE(position.x == 1 && position.y == 2);
+}
+
+TEST(TetrominoTest, LoadRotationsFromIntArray) {
+    Tetromino tetromino{};
+    tetromino.move(tetromino.getPivot());
+    tetromino.loadRotationsFromIntArray({
+        // T
+        5, 8, 9, 10
+    });
+
+    auto blocks = tetromino.getBlocks();
+    bool result = true && blocks[0].x == 1 && blocks[0].y == 1;
+    result = result && blocks[1].x == 0 && blocks[1].y == 2;
+    result = result && blocks[2].x == 1 && blocks[2].y == 2;
+    result = result && blocks[3].x == 2 && blocks[3].y == 2;
+
+    printTetromino(tetromino);
+
+    ASSERT_TRUE(result);
+}
+
+TEST(TetrominoTest, RotateLeft) {
+    Tetromino tetromino{};
+    tetromino.move(tetromino.getPivot());
+    tetromino.loadRotationsFromIntArray({
         // T
         5,8,9,10,
         5,9,10,13,
         8,9,10,13,
         5,8,9,13
     });
+    tetromino.rotateLeft();
 
-    std::cout << "Attributes" << std::endl;
-    printTetromino(t);
-    std::cout << std::endl;
+    auto blocks = tetromino.getBlocks();
+    bool result = true && blocks[0].x == 1 && blocks[0].y == 1;
+    result = result && blocks[1].x == 0 && blocks[1].y == 2;
+    result = result && blocks[2].x == 1 && blocks[2].y == 2;
+    result = result && blocks[3].x == 1 && blocks[3].y == 3;
 
-    std::cout << "TEST rotateRight()" << std::endl;
-    for (int i = 0; i < 4; ++i) {
-        std::cout << "Direction ";
-        printDirection(i % 4);
-        std::cout << std::endl;
-        printTetromino(t);
-        std::cout << std::endl;
-        t.rotateRight();
-    }
+    printTetromino(tetromino);
 
-    std::cout << "TEST rotateLeft()" << std::endl;
-    for (int i = 0; i < 4; ++i) {
-        std::cout << "Direction ";
-        printDirection((4 - i) % 4);
-        std::cout << std::endl;
-        printTetromino(t);
-        std::cout << std::endl;
-        t.rotateLeft();
-    }
+    ASSERT_TRUE(result);
+}
 
-    return 0;
+TEST(TetrominoTest, RotateRight) {
+    Tetromino tetromino{};
+    tetromino.move(tetromino.getPivot());
+    tetromino.loadRotationsFromIntArray({
+        // T
+        5,8,9,10,
+        5,9,10,13,
+        8,9,10,13,
+        5,8,9,13
+    });
+    tetromino.rotateRight();
+
+    auto blocks = tetromino.getBlocks();
+    bool result = true && blocks[0].x == 1 && blocks[0].y == 1;
+    result = result && blocks[1].x == 1 && blocks[1].y == 2;
+    result = result && blocks[2].x == 2 && blocks[2].y == 2;
+    result = result && blocks[3].x == 1 && blocks[3].y == 3;
+
+    printTetromino(tetromino);
+
+    ASSERT_TRUE(result);
+}
+
+TEST(TetrominoTest, FullRotateRight) {
+    Tetromino tetromino{};
+    tetromino.move(tetromino.getPivot());
+    tetromino.loadRotationsFromIntArray({
+        // T
+        5,8,9,10,
+        5,9,10,13,
+        8,9,10,13,
+        5,8,9,13
+    });
+    tetromino.rotateRight();
+    tetromino.rotateRight();
+    tetromino.rotateRight();
+    tetromino.rotateRight();
+
+    auto blocks = tetromino.getBlocks();
+    bool result = true && blocks[0].x == 1 && blocks[0].y == 1;
+    result = result && blocks[1].x == 0 && blocks[1].y == 2;
+    result = result && blocks[2].x == 1 && blocks[2].y == 2;
+    result = result && blocks[3].x == 2 && blocks[3].y == 2;
+
+    printTetromino(tetromino);
+
+    ASSERT_TRUE(result);
+}
+
+TEST(TetrominoTest, FullRotateLeft) {
+    Tetromino tetromino{};
+    tetromino.move(tetromino.getPivot());
+    tetromino.loadRotationsFromIntArray({
+        // T
+        5,8,9,10,
+        5,9,10,13,
+        8,9,10,13,
+        5,8,9,13
+    });
+    tetromino.rotateLeft();
+    tetromino.rotateLeft();
+    tetromino.rotateLeft();
+    tetromino.rotateLeft();
+
+    auto blocks = tetromino.getBlocks();
+    bool result = true && blocks[0].x == 1 && blocks[0].y == 1;
+    result = result && blocks[1].x == 0 && blocks[1].y == 2;
+    result = result && blocks[2].x == 1 && blocks[2].y == 2;
+    result = result && blocks[3].x == 2 && blocks[3].y == 2;
+
+    printTetromino(tetromino);
+
+    ASSERT_TRUE(result);
 }

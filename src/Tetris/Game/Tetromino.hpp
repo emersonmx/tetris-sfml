@@ -14,9 +14,11 @@ class Tetromino {
             int x;
             int y;
         };
+
         enum class Type {
             I, J, L, O, S, T, Z, SIZE
         };
+
         enum class Direction {
             UP, RIGHT, DOWN, LEFT, SIZE
         };
@@ -27,13 +29,13 @@ class Tetromino {
 
         Tetromino() = default;
 
-        Position position() const { return position_; }
+        Position getPosition() { return position_; }
         void setPosition(const Position& position) { position_ = position; }
-        Position pivot() const { return pivot_; }
+        Position getPivot() { return pivot_; }
         void setPivot(const Position& pivot) { pivot_ = pivot; }
-        Type type() const { return type_; }
+        Type getType() { return type_; }
         void setType(const Type type) { type_ = type; }
-        BlockArray blocks() const;
+        BlockArray getBlocks() const;
 
         void loadRotationsFromIntArray(const RotationIntArray& blocks);
 

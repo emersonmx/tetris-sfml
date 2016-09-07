@@ -1,3 +1,4 @@
+# Setup
 find_package(SFML 2 REQUIRED graphics system window)
 
 include_directories(
@@ -5,6 +6,7 @@ include_directories(
     "${SFML_INCLUDE_DIR}"
 )
 
+# Targets
 add_executable(braces
     braces.cpp
 )

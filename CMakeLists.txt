@@ -8,6 +8,14 @@ set(tetris_VERSION_REVISION 0)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+option(BUILD_SANDBOX "Build sandbox code" OFF)
+option(BUILD_TESTS "Build tests" OFF)
+
+configure_file(
+    "${PROJECT_SOURCE_DIR}/src/Tetris/Config.hpp.in"
+    "${PROJECT_BINARY_DIR}/Config.hpp"
+)
+
 # Compiler settings
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug CACHE STRING
@@ -33,14 +41,6 @@ if (WIN32)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__NO_INLINE__ -D_USE_MATH_DEFINES")
     set(CMAKE_EXE_LINKER_FLAGS "-Wl,--subsystem,windows")
 endif()
-
-option(BUILD_SANDBOX "Build sandbox code" OFF)
-option(BUILD_TESTS "Build tests" OFF)
-
-configure_file(
-    "${PROJECT_SOURCE_DIR}/src/Tetris/Config.hpp.in"
-    "${PROJECT_BINARY_DIR}/Config.hpp"
-)
 
 # Build settings
 include_directories("${PROJECT_BINARY_DIR}")

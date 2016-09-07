@@ -1,5 +1,5 @@
 # Project settings
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8.11)
 project(tetris)
 
 set(tetris_VERSION_MAJOR 0)

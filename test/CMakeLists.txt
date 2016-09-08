@@ -52,6 +52,7 @@ file(GLOB SRCS *.cpp)
 
 add_executable(tetris_tests ${SRCS}
     ${PROJECT_SOURCE_DIR}/src/Tetris/Game/Tetromino.cpp
+    ${PROJECT_SOURCE_DIR}/src/Tetris/Game/Tetris.cpp
 )
 
 target_link_libraries(tetris_tests

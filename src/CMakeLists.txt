@@ -8,4 +8,5 @@ configure_file(
 add_executable(${PROJECT_NAME}
     Tetris/Main.cpp
     Tetris/Game/Tetromino.cpp
+    Tetris/Game/Tetris.cpp
 )

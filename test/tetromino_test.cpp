@@ -53,7 +53,7 @@ TEST(TetrominoTest, LoadRotationsFromIntArray) {
     result = result && blocks[2].x == 1 && blocks[2].y == 2;
     result = result && blocks[3].x == 2 && blocks[3].y == 2;
 
-    printTetromino(tetromino);
+    //printTetromino(tetromino);
 
     ASSERT_TRUE(result);
 }
@@ -76,7 +76,7 @@ TEST(TetrominoTest, RotateLeft) {
     result = result && blocks[2].x == 1 && blocks[2].y == 2;
     result = result && blocks[3].x == 1 && blocks[3].y == 3;
 
-    printTetromino(tetromino);
+    //printTetromino(tetromino);
 
     ASSERT_TRUE(result);
 }
@@ -99,7 +99,7 @@ TEST(TetrominoTest, RotateRight) {
     result = result && blocks[2].x == 2 && blocks[2].y == 2;
     result = result && blocks[3].x == 1 && blocks[3].y == 3;
 
-    printTetromino(tetromino);
+    //printTetromino(tetromino);
 
     ASSERT_TRUE(result);
 }
@@ -125,7 +125,7 @@ TEST(TetrominoTest, FullRotateRight) {
     result = result && blocks[2].x == 1 && blocks[2].y == 2;
     result = result && blocks[3].x == 2 && blocks[3].y == 2;
 
-    printTetromino(tetromino);
+    //printTetromino(tetromino);
 
     ASSERT_TRUE(result);
 }
@@ -151,7 +151,7 @@ TEST(TetrominoTest, FullRotateLeft) {
     result = result && blocks[2].x == 1 && blocks[2].y == 2;
     result = result && blocks[3].x == 2 && blocks[3].y == 2;
 
-    printTetromino(tetromino);
+    //printTetromino(tetromino);
 
     ASSERT_TRUE(result);
 }

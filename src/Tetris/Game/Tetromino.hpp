@@ -29,11 +29,11 @@ class Tetromino {
 
         Tetromino() = default;
 
-        Position getPosition() { return position_; }
+        Position getPosition() const { return position_; }
         void setPosition(const Position& position) { position_ = position; }
-        Position getPivot() { return pivot_; }
+        Position getPivot() const { return pivot_; }
         void setPivot(const Position& pivot) { pivot_ = pivot; }
-        Type getType() { return type_; }
+        Type getType() const { return type_; }
         void setType(const Type type) { type_ = type; }
         BlockArray getBlocks() const;
 

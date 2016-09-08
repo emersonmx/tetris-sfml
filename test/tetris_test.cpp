@@ -45,7 +45,7 @@ void printGame(const Tetris::WorldBlockArray& world, const Tetromino& tetromino)
                 std::cout << "#";
             } else {
                 std::cout << ".";
-            } 
+            }
         }
 
         if (j == Tetris::WORLD_WIDTH - 1) {
@@ -188,15 +188,14 @@ TEST_F(TetrisTest, GameOver) {
 
 TEST_F(TetrisTest, ScoreUpdated) {
     bool result = false;
-    int index = 0;
 
     tetris.scoreUpdatedCallback = [&](const int score) {
         result = true;
     };
 
-    tetris.create(TetrisTest::DEFAULT_SEED); 
+    tetris.create(TetrisTest::DEFAULT_SEED);
 
-    for (int i = 0; i < 80; ++i) { 
+    for (int i = 0; i < 80; ++i) {
         if (i < 4) {
             tetris.setInputMovement(Tetris::InputDirection::RIGHT);
         }
@@ -204,7 +203,7 @@ TEST_F(TetrisTest, ScoreUpdated) {
             tetris.setInputMovement(Tetris::InputDirection::LEFT);
         }
         if (i == 35) {
-            tetris.setInputMovement(Tetris::InputDirection::LEFT); 
+            tetris.setInputMovement(Tetris::InputDirection::LEFT);
         }
         if (i >= 57 && i < 59) {
             if (i == 57) {

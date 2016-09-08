@@ -59,9 +59,6 @@ class Tetris {
         void saveCurrentTetromino();
 
         bool hasCollisions();
-        bool collidedInTheBlocks();
-        bool collidedWalls();
-        bool collidedOnTheGround();
         void nextTetromino();
         void setupBlockDataArray();
 

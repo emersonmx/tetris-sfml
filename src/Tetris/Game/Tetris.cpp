@@ -86,7 +86,7 @@ void Tetris::moveDownTetromino() {
                 int type = static_cast<int>(currentTetromino_.getType()) + 1;
                 worldBlockArray_[block.y][block.x] = type;
             }
-            nextTetromino(); 
+            nextTetromino();
             eraseLines();
             fireWorldUpdated();
         }
@@ -138,39 +138,9 @@ bool Tetris::hasCollisions() {
     return false;
 }
 
-bool Tetris::collidedInTheBlocks() {
-    for (auto block : currentTetromino_.getBlocks()) {
-        if (worldBlockArray_[block.y][block.x] > 0) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-bool Tetris::collidedWalls() {
-    for (auto block : currentTetromino_.getBlocks()) {
-        if (block.x < 0 || block.x >= WORLD_WIDTH) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-bool Tetris::collidedOnTheGround() {
-    for (auto block : currentTetromino_.getBlocks()) {
-        if (block.x < 0 || block.x >= WORLD_WIDTH) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
 void Tetris::nextTetromino() {
-    std::uniform_int_distribution<> uniform_dist(0, 
-            static_cast<int>(Tetromino::Type::SIZE) - 1); 
+    std::uniform_int_distribution<> uniform_dist(0,
+            static_cast<int>(Tetromino::Type::SIZE) - 1);
     int index = uniform_dist(rng_);
 
     Tetromino tetromino;
@@ -180,7 +150,7 @@ void Tetris::nextTetromino() {
 
     currentTetromino_ = tetromino;
 
-    if (collidedInTheBlocks()) {
+    if (hasCollisions()) {
         gameOver_ = true;
     }
 }

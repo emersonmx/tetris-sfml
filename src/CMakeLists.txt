@@ -16,6 +16,8 @@ add_executable(${PROJECT_NAME}
     Tetris/Game/Tetromino.cpp
     Tetris/Game/Tetris.cpp
 
+    Tetris/Assets.cpp
+
     Tetris/Utils.cpp
 )
 target_link_libraries(${PROJECT_NAME}

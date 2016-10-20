@@ -40,6 +40,7 @@ void Tetris::update(const float deltaTime) {
 
     timer_ += deltaTime;
 
+    // TODO: Remove delay
     delay_ = fastFall_ ? FAST_FALL_DELAY : DEFAULT_DELAY;
 
     saveCurrentTetromino();
@@ -75,6 +76,7 @@ void Tetris::rotateTetromino() {
 }
 
 void Tetris::moveDownTetromino() {
+    // TODO: Remove delay
     if (timer_ >= delay_) {
         saveCurrentTetromino();
 

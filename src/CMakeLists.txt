@@ -1,11 +1,6 @@
 # Setup
 find_package(SFML 2 REQUIRED graphics system window)
 
-configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/Config.hpp.in"
-    "${PROJECT_BINARY_DIR}/Config.hpp"
-)
-
 include_directories(
     "${SFML_INCLUDE_DIR}"
 )
@@ -13,12 +8,20 @@ include_directories(
 # Targets
 add_executable(${PROJECT_NAME}
     Tetris/Main.cpp
+    Tetris/App.cpp
+
+    Tetris/States/DefaultState.cpp
+    Tetris/States/GameState.cpp
+
     Tetris/Game/Tetromino.cpp
     Tetris/Game/Tetris.cpp
 
     Tetris/Assets.cpp
-
     Tetris/Utils.cpp
+
+    # mxg
+    mxg/Application.cpp
+    mxg/Game.cpp
 )
 target_link_libraries(${PROJECT_NAME}
     "${SFML_LIBRARIES}"

@@ -5,10 +5,10 @@
 namespace tetris {
 
 void Assets::loadAssets() {
-    block_ = loadTextureFromFile("assets/block.png");
-    grid_ = loadTextureFromFile("assets/grid.png");
+    //block_ = loadTextureFromFile("assets/block.png");
+    //grid_ = loadTextureFromFile("assets/grid.png");
 
-    defaultFont_ = loadFontFromFile("assets/PressStart2P.ttf");
+    //defaultFont_ = loadFontFromFile("assets/PressStart2P.ttf");
 }
 
 sf::Texture Assets::loadTextureFromFile(const std::string& filename) {

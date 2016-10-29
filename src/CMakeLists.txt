@@ -13,6 +13,8 @@ add_executable(${PROJECT_NAME}
     Tetris/States/DefaultState.cpp
     Tetris/States/GameState.cpp
 
+    Tetris/GameObjects/BlockRenderer.cpp
+
     Tetris/Game/Tetromino.cpp
     Tetris/Game/Tetris.cpp
 

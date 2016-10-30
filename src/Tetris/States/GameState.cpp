@@ -1,5 +1,9 @@
 #include "Tetris/States/GameState.hpp"
 
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Text.hpp>
+
 #include "Tetris/App.hpp"
 #include "Tetris/Utils.hpp"
 #include "Tetris/Game/Tetris.hpp"

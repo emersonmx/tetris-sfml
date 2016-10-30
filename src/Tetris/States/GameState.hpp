@@ -1,10 +1,6 @@
 #ifndef TETRIS_STATES_GAMESTATE_HPP_
 #define TETRIS_STATES_GAMESTATE_HPP_
 
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/Graphics/Text.hpp>
-
 #include "Tetris/States/DefaultState.hpp"
 
 namespace tetris {

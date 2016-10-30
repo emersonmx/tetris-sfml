@@ -8,6 +8,7 @@
 #include "Tetris/Game/Tetromino.hpp"
 
 namespace tetris {
+namespace game {
 
 class Tetris {
     public:
@@ -85,5 +86,6 @@ class Tetris {
         std::mt19937 rng_;
 };
 
+} /* namespace game */
 } /* namespace tetris */
 #endif /* TETRIS_GAME_TETRIS_HPP_ */

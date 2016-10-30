@@ -2,7 +2,10 @@
 
 #include "Tetris/App.hpp"
 
+using namespace tetris::game;
+
 namespace tetris {
+namespace gameobjects {
 
 void BlockRenderer::create(Assets& assets) {
     sf::Texture& blockTexture = assets.getBlock();
@@ -71,4 +74,5 @@ void BlockRenderer::draw(sf::RenderTarget& target, sf::RenderStates states) cons
     }
 }
 
+} /* namespace gameobjects */
 } /* namespace tetris */

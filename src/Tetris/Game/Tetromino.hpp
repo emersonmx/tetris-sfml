@@ -4,6 +4,7 @@
 #include <array>
 
 namespace tetris {
+namespace game {
 
 class Tetromino {
     public:
@@ -56,5 +57,6 @@ class Tetromino {
         RotationArray rotationArray_{};
 };
 
+} /* namespace game */
 } /* namespace tetris */
 #endif /* TETRIS_GAME_TETROMINO_HPP_ */

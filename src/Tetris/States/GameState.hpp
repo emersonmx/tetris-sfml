@@ -26,8 +26,8 @@ class GameState : public DefaultState {
         void render(sf::RenderTarget& renderTarget) override;
 
     private:
-        Tetris world_{};
-        BlockRenderer blockRenderer_{};
+        tetris::game::Tetris world_{};
+        tetris::gameobjects::BlockRenderer blockRenderer_{};
         sf::Sprite gridSprite_{};
         sf::RectangleShape gameAreaShape_{};
         sf::RectangleShape backgroundShape_{};

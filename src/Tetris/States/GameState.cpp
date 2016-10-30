@@ -3,6 +3,8 @@
 #include "Tetris/App.hpp"
 #include "Tetris/Utils.hpp"
 
+using namespace tetris::game;
+
 namespace tetris {
 namespace states {
 

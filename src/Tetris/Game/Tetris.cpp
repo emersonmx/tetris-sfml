@@ -5,6 +5,7 @@
 #include <algorithm>
 
 namespace tetris {
+namespace game {
 
 void Tetris::create() {
     create(time(0));
@@ -144,7 +145,7 @@ void Tetris::nextTetromino() {
     int index = uniform_dist(rng_);
 
     Tetromino tetromino;
-    tetromino.setType(static_cast<tetris::Tetromino::Type>(index));
+    tetromino.setType(static_cast<Tetromino::Type>(index));
     tetromino.loadRotationsFromIntArray(blockDataArray_[index]);
     tetromino.move({4, 1});
 
@@ -235,4 +236,5 @@ void Tetris::fireWorldUpdated() {
     }
 }
 
+} /* namespace game */
 } /* namespace tetris */

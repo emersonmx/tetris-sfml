@@ -4,6 +4,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 namespace tetris {
+namespace gameobjects {
 
 class GameObject : public sf::Sprite {
     public:
@@ -16,7 +17,6 @@ class GameObject : public sf::Sprite {
         bool active_{true};
 };
 
-using Sprite = GameObject;
-
+} /* namespace gameobjects */
 } /* namespace tetris */
 #endif /* TETRIS_GAMEOBJECTS_GAMEOBJECT_HPP_ */

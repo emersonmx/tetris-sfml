@@ -4,6 +4,7 @@
 #include <algorithm>
 
 namespace tetris {
+namespace game {
 
 Tetromino::BlockArray Tetromino::getBlocks() const {
     BlockArray blocks{rotationArray_[rotation_]};
@@ -55,4 +56,5 @@ Tetromino::BlockArray Tetromino::loadBlockFromIntArray(
     return result;
 }
 
+} /* namespace game */
 } /* namespace tetris */

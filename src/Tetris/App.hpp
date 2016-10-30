@@ -9,7 +9,6 @@
 
 #include "Tetris/Defs.hpp"
 #include "Tetris/Assets.hpp"
-#include "Tetris/Game/Tetris.hpp"
 
 namespace tetris {
 

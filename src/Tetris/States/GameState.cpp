@@ -41,6 +41,8 @@ GameState::GameState(App& app)
 GameState::~GameState() = default;
 
 void GameState::create() {
+    using namespace tetris::utils;
+
     auto& app = getApp();
     auto& assets = app.getAssets();
 
@@ -78,7 +80,7 @@ void GameState::create() {
     impl_->highScoreText.setCharacterSize(defaultFontSize);
     impl_->highScoreText.setFillColor(defaultFontColor);
     impl_->highScoreText.setString("HI-SCORE");
-    aux = Utils::calculateCenterOfRect(impl_->highScoreText.getLocalBounds());
+    aux = calculateCenterOfRect(impl_->highScoreText.getLocalBounds());
     impl_->highScoreText.setOrigin(aux);
     impl_->highScoreText.setPosition(uiCenterPosition, 49);
 
@@ -86,7 +88,7 @@ void GameState::create() {
     impl_->highScoreValueText.setCharacterSize(defaultFontSize);
     impl_->highScoreValueText.setFillColor(defaultFontColor);
     impl_->highScoreValueText.setString("00000000");
-    aux = Utils::calculateCenterOfRect(impl_->highScoreValueText.getLocalBounds());
+    aux = calculateCenterOfRect(impl_->highScoreValueText.getLocalBounds());
     impl_->highScoreValueText.setOrigin(aux);
     impl_->highScoreValueText.setPosition(uiCenterPosition, 80);
 
@@ -94,7 +96,7 @@ void GameState::create() {
     impl_->scoreText.setCharacterSize(defaultFontSize);
     impl_->scoreText.setFillColor(defaultFontColor);
     impl_->scoreText.setString("SCORE");
-    aux = Utils::calculateCenterOfRect(impl_->scoreText.getLocalBounds());
+    aux = calculateCenterOfRect(impl_->scoreText.getLocalBounds());
     impl_->scoreText.setOrigin(aux);
     impl_->scoreText.setPosition(uiCenterPosition, 112);
 
@@ -102,7 +104,7 @@ void GameState::create() {
     impl_->scoreValueText.setCharacterSize(defaultFontSize);
     impl_->scoreValueText.setFillColor(defaultFontColor);
     impl_->scoreValueText.setString("00000000");
-    aux = Utils::calculateCenterOfRect(impl_->scoreValueText.getLocalBounds());
+    aux = calculateCenterOfRect(impl_->scoreValueText.getLocalBounds());
     impl_->scoreValueText.setOrigin(aux);
     impl_->scoreValueText.setPosition(uiCenterPosition, 144);
 
@@ -124,7 +126,7 @@ void GameState::create() {
                 text.setString("menu");
                 break;
         }
-        aux = Utils::calculateCenterOfRect(text.getLocalBounds());
+        aux = calculateCenterOfRect(text.getLocalBounds());
         text.setOrigin(aux);
         text.setPosition(uiCenterPosition, infoTextBaseY + 32 * i);
     }
@@ -133,7 +135,7 @@ void GameState::create() {
     impl_->nextText.setCharacterSize(defaultFontSize);
     impl_->nextText.setFillColor(defaultFontColor);
     impl_->nextText.setString("NEXT");
-    aux = Utils::calculateCenterOfRect(impl_->nextText.getLocalBounds());
+    aux = calculateCenterOfRect(impl_->nextText.getLocalBounds());
     impl_->nextText.setOrigin(aux);
     impl_->nextText.setPosition(uiCenterPosition, 400);
 

@@ -2,11 +2,39 @@
 
 #include "Tetris/App.hpp"
 #include "Tetris/Utils.hpp"
+#include "Tetris/Game/Tetris.hpp"
+#include "Tetris/GameObjects/Tetromino.hpp"
+#include "Tetris/GameObjects/GameArea.hpp"
 
 using namespace tetris::game;
 
 namespace tetris {
 namespace states {
+
+struct GameState::Impl {
+    tetris::game::Tetris world{};
+    tetris::gameobjects::Tetromino tetrominoObject{};
+    tetris::gameobjects::GameArea gameAreaObject{};
+    sf::Sprite gridSprite{};
+    sf::RectangleShape gameAreaShape{};
+    sf::RectangleShape backgroundShape{};
+    sf::RectangleShape nextShape{};
+
+    sf::Text highScoreText{};
+    sf::Text highScoreValueText{};
+    sf::Text scoreText{};
+    sf::Text scoreValueText{};
+    sf::Text nextText{};
+    std::array<sf::Text, 3> infoText{};
+
+    sf::Clock clock{};
+    float deltaTime{0.0f};
+    bool paused{false};
+};
+
+GameState::GameState(App& app)
+    : DefaultState(app), impl_(std::make_unique<Impl>()) {}
+GameState::~GameState() = default;
 
 void GameState::create() {
     auto& app = getApp();
@@ -22,62 +50,62 @@ void GameState::create() {
     sf::Color nextShapeColor{252,202,70};
     int defaultFontSize = 28;
 
-    blockRenderer_.create(assets);
-    gridSprite_.setTexture(assets.getGrid());
+    //blockRenderer_.create(assets);
+    impl_->gridSprite.setTexture(assets.getGrid());
 
-    gameAreaShape_.setSize({
+    impl_->gameAreaShape.setSize({
         App::TILE_SIZE * Tetris::WORLD_WIDTH,
         App::TILE_SIZE * Tetris::WORLD_HEIGHT
     });
-    gameAreaShape_.setPosition(0, 0);
-    gameAreaShape_.setFillColor(gameAreaShapeColor);
+    impl_->gameAreaShape.setPosition(0, 0);
+    impl_->gameAreaShape.setFillColor(gameAreaShapeColor);
 
-    backgroundShape_.setSize({
+    impl_->backgroundShape.setSize({
         App::WINDOW_WIDTH, App::WINDOW_HEIGHT
     });
-    backgroundShape_.setPosition(0, 0);
-    backgroundShape_.setFillColor(backgroundShapeColor);
+    impl_->backgroundShape.setPosition(0, 0);
+    impl_->backgroundShape.setFillColor(backgroundShapeColor);
 
-    nextShape_.setSize({128, 128});
-    nextShape_.setPosition(384, App::TILE_SIZE*13);
-    nextShape_.setFillColor(nextShapeColor);
+    impl_->nextShape.setSize({128, 128});
+    impl_->nextShape.setPosition(384, App::TILE_SIZE*13);
+    impl_->nextShape.setFillColor(nextShapeColor);
 
-    highScoreText_.setFont(defaultFont);
-    highScoreText_.setCharacterSize(defaultFontSize);
-    highScoreText_.setFillColor(defaultFontColor);
-    highScoreText_.setString("HI-SCORE");
-    aux = Utils::calculateCenterOfRect(highScoreText_.getLocalBounds());
-    highScoreText_.setOrigin(aux);
-    highScoreText_.setPosition(uiCenterPosition, 49);
+    impl_->highScoreText.setFont(defaultFont);
+    impl_->highScoreText.setCharacterSize(defaultFontSize);
+    impl_->highScoreText.setFillColor(defaultFontColor);
+    impl_->highScoreText.setString("HI-SCORE");
+    aux = Utils::calculateCenterOfRect(impl_->highScoreText.getLocalBounds());
+    impl_->highScoreText.setOrigin(aux);
+    impl_->highScoreText.setPosition(uiCenterPosition, 49);
 
-    highScoreValueText_.setFont(defaultFont);
-    highScoreValueText_.setCharacterSize(defaultFontSize);
-    highScoreValueText_.setFillColor(defaultFontColor);
-    highScoreValueText_.setString("00000000");
-    aux = Utils::calculateCenterOfRect(highScoreValueText_.getLocalBounds());
-    highScoreValueText_.setOrigin(aux);
-    highScoreValueText_.setPosition(uiCenterPosition, 80);
+    impl_->highScoreValueText.setFont(defaultFont);
+    impl_->highScoreValueText.setCharacterSize(defaultFontSize);
+    impl_->highScoreValueText.setFillColor(defaultFontColor);
+    impl_->highScoreValueText.setString("00000000");
+    aux = Utils::calculateCenterOfRect(impl_->highScoreValueText.getLocalBounds());
+    impl_->highScoreValueText.setOrigin(aux);
+    impl_->highScoreValueText.setPosition(uiCenterPosition, 80);
 
-    scoreText_.setFont(defaultFont);
-    scoreText_.setCharacterSize(defaultFontSize);
-    scoreText_.setFillColor(defaultFontColor);
-    scoreText_.setString("SCORE");
-    aux = Utils::calculateCenterOfRect(scoreText_.getLocalBounds());
-    scoreText_.setOrigin(aux);
-    scoreText_.setPosition(uiCenterPosition, 112);
+    impl_->scoreText.setFont(defaultFont);
+    impl_->scoreText.setCharacterSize(defaultFontSize);
+    impl_->scoreText.setFillColor(defaultFontColor);
+    impl_->scoreText.setString("SCORE");
+    aux = Utils::calculateCenterOfRect(impl_->scoreText.getLocalBounds());
+    impl_->scoreText.setOrigin(aux);
+    impl_->scoreText.setPosition(uiCenterPosition, 112);
 
-    scoreValueText_.setFont(defaultFont);
-    scoreValueText_.setCharacterSize(defaultFontSize);
-    scoreValueText_.setFillColor(defaultFontColor);
-    scoreValueText_.setString("00000000");
-    aux = Utils::calculateCenterOfRect(scoreValueText_.getLocalBounds());
-    scoreValueText_.setOrigin(aux);
-    scoreValueText_.setPosition(uiCenterPosition, 144);
+    impl_->scoreValueText.setFont(defaultFont);
+    impl_->scoreValueText.setCharacterSize(defaultFontSize);
+    impl_->scoreValueText.setFillColor(defaultFontColor);
+    impl_->scoreValueText.setString("00000000");
+    aux = Utils::calculateCenterOfRect(impl_->scoreValueText.getLocalBounds());
+    impl_->scoreValueText.setOrigin(aux);
+    impl_->scoreValueText.setPosition(uiCenterPosition, 144);
 
-    int infoTextSize = static_cast<int>(infoText_.size());
+    int infoTextSize = static_cast<int>(impl_->infoText.size());
     int infoTextBaseY = 240;
     for (int i = 0; i < infoTextSize; ++i) {
-        auto& text = infoText_[i];
+        auto& text = impl_->infoText[i];
         text.setFont(defaultFont);
         text.setCharacterSize(defaultFontSize);
         text.setFillColor(defaultFontColor);
@@ -97,29 +125,24 @@ void GameState::create() {
         text.setPosition(uiCenterPosition, infoTextBaseY + 32 * i);
     }
 
-    nextText_.setFont(defaultFont);
-    nextText_.setCharacterSize(defaultFontSize);
-    nextText_.setFillColor(defaultFontColor);
-    nextText_.setString("NEXT");
-    aux = Utils::calculateCenterOfRect(nextText_.getLocalBounds());
-    nextText_.setOrigin(aux);
-    nextText_.setPosition(uiCenterPosition, 400);
+    impl_->nextText.setFont(defaultFont);
+    impl_->nextText.setCharacterSize(defaultFontSize);
+    impl_->nextText.setFillColor(defaultFontColor);
+    impl_->nextText.setString("NEXT");
+    aux = Utils::calculateCenterOfRect(impl_->nextText.getLocalBounds());
+    impl_->nextText.setOrigin(aux);
+    impl_->nextText.setPosition(uiCenterPosition, 400);
 
-    world_.tetrominoUpdatedCallback = [&] (const Tetromino& tetromino) {
-        blockRenderer_.tetrominoUpdated(tetromino);
-    };
-    world_.worldUpdatedCallback = [&] (const Tetris::WorldBlockArray& blocks) {
-        blockRenderer_.worldUpdated(blocks);
-    };
-    world_.create();
+    setupBlockRenderers();
+    impl_->world.create();
 }
 
 void GameState::destroy() {
-    world_.destroy();
+    impl_->world.destroy();
 }
 
 void GameState::beginTick() {
-    deltaTime_ = clock_.restart().asSeconds();
+    impl_->deltaTime = impl_->clock.restart().asSeconds();
 }
 
 void GameState::processEvent(const sf::Event& event) {
@@ -127,42 +150,56 @@ void GameState::processEvent(const sf::Event& event) {
 
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Left) {
-            world_.setInputMovement(Tetris::InputDirection::LEFT);
+            impl_->world.setInputMovement(Tetris::InputDirection::LEFT);
         } else if (event.key.code == sf::Keyboard::Right) {
-            world_.setInputMovement(Tetris::InputDirection::RIGHT);
+            impl_->world.setInputMovement(Tetris::InputDirection::RIGHT);
         }
         if (event.key.code == sf::Keyboard::Z) {
-            world_.setInputRotation(Tetris::InputDirection::LEFT);
+            impl_->world.setInputRotation(Tetris::InputDirection::LEFT);
         } else if (event.key.code == sf::Keyboard::X) {
-            world_.setInputRotation(Tetris::InputDirection::RIGHT);
+            impl_->world.setInputRotation(Tetris::InputDirection::RIGHT);
         }
         if (event.key.code == sf::Keyboard::Return) {
-            paused_ = !paused_;
+            impl_->paused = !impl_->paused;
         }
     }
 }
 
 void GameState::update() {
-    if (!paused_) {
-        world_.setFastFall(sf::Keyboard::isKeyPressed(sf::Keyboard::Down));
-        world_.update(deltaTime_);
+    if (!impl_->paused) {
+        impl_->world.setFastFall(sf::Keyboard::isKeyPressed(sf::Keyboard::Down));
+        impl_->world.update(impl_->deltaTime);
     }
 }
 
 void GameState::render(sf::RenderTarget& renderTarget) {
-    renderTarget.draw(backgroundShape_);
-    renderTarget.draw(gameAreaShape_);
-    renderTarget.draw(gridSprite_);
-    renderTarget.draw(nextShape_);
-    renderTarget.draw(highScoreText_);
-    renderTarget.draw(highScoreValueText_);
-    renderTarget.draw(scoreText_);
-    renderTarget.draw(scoreValueText_);
-    for (auto& info : infoText_) {
+    renderTarget.draw(impl_->backgroundShape);
+    renderTarget.draw(impl_->gameAreaShape);
+    renderTarget.draw(impl_->gridSprite);
+    renderTarget.draw(impl_->nextShape);
+    renderTarget.draw(impl_->highScoreText);
+    renderTarget.draw(impl_->highScoreValueText);
+    renderTarget.draw(impl_->scoreText);
+    renderTarget.draw(impl_->scoreValueText);
+    for (auto& info : impl_->infoText) {
         renderTarget.draw(info);
     }
-    renderTarget.draw(nextText_);
-    renderTarget.draw(blockRenderer_);
+    renderTarget.draw(impl_->nextText);
+
+    renderTarget.draw(impl_->tetrominoObject);
+    renderTarget.draw(impl_->gameAreaObject);
+}
+
+void GameState::setupBlockRenderers() {
+    auto& blockTexture = getApp().getAssets().getBlock();
+    impl_->tetrominoObject.create(blockTexture);
+    impl_->world.tetrominoUpdatedCallback = [&] (const Tetromino& tetromino) {
+        impl_->tetrominoObject.updateTetromino(tetromino);
+    };
+    impl_->gameAreaObject.create(blockTexture);
+    impl_->world.worldUpdatedCallback = [&] (const Tetris::WorldBlockArray& blocks) {
+        impl_->gameAreaObject.updateWorld(blocks);
+    };
 }
 
 } /* namespace states */

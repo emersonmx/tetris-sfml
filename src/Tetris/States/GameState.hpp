@@ -6,8 +6,6 @@
 #include <SFML/Graphics/Text.hpp>
 
 #include "Tetris/States/DefaultState.hpp"
-#include "Tetris/Game/Tetris.hpp"
-#include "Tetris/GameObjects/BlockRenderer.hpp"
 
 namespace tetris {
 namespace states {
@@ -15,6 +13,9 @@ namespace states {
 class GameState : public DefaultState {
     public:
         using DefaultState::DefaultState;
+
+        GameState(App& app);
+        virtual ~GameState();
 
         void create() override;
         void destroy() override;
@@ -26,23 +27,10 @@ class GameState : public DefaultState {
         void render(sf::RenderTarget& renderTarget) override;
 
     private:
-        tetris::game::Tetris world_{};
-        tetris::gameobjects::BlockRenderer blockRenderer_{};
-        sf::Sprite gridSprite_{};
-        sf::RectangleShape gameAreaShape_{};
-        sf::RectangleShape backgroundShape_{};
-        sf::RectangleShape nextShape_{};
+        void setupBlockRenderers();
 
-        sf::Text highScoreText_{};
-        sf::Text highScoreValueText_{};
-        sf::Text scoreText_{};
-        sf::Text scoreValueText_{};
-        sf::Text nextText_{};
-        std::array<sf::Text, 3> infoText_{};
-
-        sf::Clock clock_{};
-        float deltaTime_{0.0f};
-        bool paused_{false};
+        struct Impl;
+        std::unique_ptr<Impl> impl_;
 };
 
 } /* namespace states */

@@ -13,6 +13,12 @@ void GameState::create() {
     int uiCenterPosition = 448;
     auto& defaultFont = assets.getDefaultFont();
 
+    sf::Color defaultFontColor{255, 255, 255};
+    sf::Color backgroundShapeColor{254,127,45};
+    sf::Color gameAreaShapeColor{253,226,154};
+    sf::Color nextShapeColor{252,202,70};
+    int defaultFontSize = 28;
+
     blockRenderer_.create(assets);
     gridSprite_.setTexture(assets.getGrid());
 
@@ -21,45 +27,45 @@ void GameState::create() {
         App::TILE_SIZE * Tetris::WORLD_HEIGHT
     });
     gameAreaShape_.setPosition(0, 0);
-    gameAreaShape_.setFillColor({71, 114, 134});
+    gameAreaShape_.setFillColor(gameAreaShapeColor);
 
     backgroundShape_.setSize({
         App::WINDOW_WIDTH, App::WINDOW_HEIGHT
     });
     backgroundShape_.setPosition(0, 0);
-    backgroundShape_.setFillColor({3, 37, 54});
+    backgroundShape_.setFillColor(backgroundShapeColor);
 
     nextShape_.setSize({128, 128});
     nextShape_.setPosition(384, App::TILE_SIZE*13);
-    nextShape_.setFillColor({17, 60, 82});
+    nextShape_.setFillColor(nextShapeColor);
 
     highScoreText_.setFont(defaultFont);
-    highScoreText_.setCharacterSize(18);
-    highScoreText_.setFillColor({110, 145, 161});
+    highScoreText_.setCharacterSize(defaultFontSize);
+    highScoreText_.setFillColor(defaultFontColor);
     highScoreText_.setString("HI-SCORE");
     aux = Utils::calculateCenterOfRect(highScoreText_.getLocalBounds());
     highScoreText_.setOrigin(aux);
     highScoreText_.setPosition(uiCenterPosition, 49);
 
     highScoreValueText_.setFont(defaultFont);
-    highScoreValueText_.setCharacterSize(18);
-    highScoreValueText_.setFillColor({110, 145, 161});
+    highScoreValueText_.setCharacterSize(defaultFontSize);
+    highScoreValueText_.setFillColor(defaultFontColor);
     highScoreValueText_.setString("00000000");
     aux = Utils::calculateCenterOfRect(highScoreValueText_.getLocalBounds());
     highScoreValueText_.setOrigin(aux);
     highScoreValueText_.setPosition(uiCenterPosition, 80);
 
     scoreText_.setFont(defaultFont);
-    scoreText_.setCharacterSize(18);
-    scoreText_.setFillColor({110, 145, 161});
+    scoreText_.setCharacterSize(defaultFontSize);
+    scoreText_.setFillColor(defaultFontColor);
     scoreText_.setString("SCORE");
     aux = Utils::calculateCenterOfRect(scoreText_.getLocalBounds());
     scoreText_.setOrigin(aux);
     scoreText_.setPosition(uiCenterPosition, 112);
 
     scoreValueText_.setFont(defaultFont);
-    scoreValueText_.setCharacterSize(18);
-    scoreValueText_.setFillColor({110, 145, 161});
+    scoreValueText_.setCharacterSize(defaultFontSize);
+    scoreValueText_.setFillColor(defaultFontColor);
     scoreValueText_.setString("00000000");
     aux = Utils::calculateCenterOfRect(scoreValueText_.getLocalBounds());
     scoreValueText_.setOrigin(aux);
@@ -70,8 +76,8 @@ void GameState::create() {
     for (int i = 0; i < infoTextSize; ++i) {
         auto& text = infoText_[i];
         text.setFont(defaultFont);
-        text.setCharacterSize(18);
-        text.setFillColor({110, 145, 161});
+        text.setCharacterSize(defaultFontSize);
+        text.setFillColor(defaultFontColor);
         switch (i) {
             case 0:
                 text.setString("Press");
@@ -89,8 +95,8 @@ void GameState::create() {
     }
 
     nextText_.setFont(defaultFont);
-    nextText_.setCharacterSize(18);
-    nextText_.setFillColor({110, 145, 161});
+    nextText_.setCharacterSize(defaultFontSize);
+    nextText_.setFillColor(defaultFontColor);
     nextText_.setString("NEXT");
     aux = Utils::calculateCenterOfRect(nextText_.getLocalBounds());
     nextText_.setOrigin(aux);

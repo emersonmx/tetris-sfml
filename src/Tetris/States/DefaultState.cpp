@@ -5,6 +5,7 @@
 #include "Tetris/App.hpp"
 
 namespace tetris {
+namespace states {
 
 void DefaultState::tick() {
     beginTick();
@@ -37,4 +38,5 @@ void DefaultState::processEvent(const sf::Event& event) {
     }
 }
 
+} /* namespace states */
 } /* namespace tetris */

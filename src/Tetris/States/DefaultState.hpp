@@ -7,8 +7,9 @@
 #include "mxg/DefaultState.hpp"
 
 namespace tetris {
-
 class App;
+
+namespace states {
 
 class DefaultState: public mxg::DefaultState {
     public:
@@ -32,6 +33,7 @@ class DefaultState: public mxg::DefaultState {
         App& app_;
 };
 
+} /* namespace states */
 } /* namespace tetris */
 #endif /* TETRIS_STATES_DEFAULTSTATE_HPP_ */
 

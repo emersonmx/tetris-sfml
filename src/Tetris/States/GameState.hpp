@@ -10,6 +10,7 @@
 #include "Tetris/GameObjects/BlockRenderer.hpp"
 
 namespace tetris {
+namespace states {
 
 class GameState : public DefaultState {
     public:
@@ -44,5 +45,6 @@ class GameState : public DefaultState {
         bool paused_{false};
 };
 
+} /* namespace states */
 } /* namespace tetris */
 #endif /* TETRIS_STATES_GAMESTATE_HPP_ */

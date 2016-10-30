@@ -4,6 +4,7 @@
 #include "Tetris/Utils.hpp"
 
 namespace tetris {
+namespace states {
 
 void GameState::create() {
     auto& app = getApp();
@@ -162,4 +163,5 @@ void GameState::render(sf::RenderTarget& renderTarget) {
     renderTarget.draw(blockRenderer_);
 }
 
+} /* namespace states */
 } /* namespace tetris */

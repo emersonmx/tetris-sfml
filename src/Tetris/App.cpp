@@ -39,6 +39,8 @@ void App::tick() {
 }
 
 void App::setupStates() {
+    using namespace tetris::states;
+
     clearState();
 
     auto gameState = std::make_unique<GameState>(*this);

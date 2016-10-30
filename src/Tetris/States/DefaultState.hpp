@@ -27,7 +27,7 @@ class DefaultState: public mxg::DefaultState {
         virtual void endTick() {}
 
         virtual void processEvent(const sf::Event& event);
-        virtual void render(sf::RenderTarget& renderTarget) {}
+        virtual void render(sf::RenderTarget& renderTarget) = 0;
 
     private:
         App& app_;

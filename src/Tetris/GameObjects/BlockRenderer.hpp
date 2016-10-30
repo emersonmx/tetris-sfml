@@ -25,8 +25,6 @@ class BlockRenderer : public GameObject {
 
         std::array<tetris::Sprite, Tetromino::BLOCK_SIZE> currentTetromino_{};
         std::array<tetris::Sprite, Tetris::WORLD_WIDTH * Tetris::WORLD_HEIGHT> blockSprites_{};
-
-        sf::Transformable transformable_{};
 };
 
 } /* namespace tetris */

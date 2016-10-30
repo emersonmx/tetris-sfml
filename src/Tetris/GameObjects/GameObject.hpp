@@ -12,8 +12,6 @@ class GameObject : public sf::Sprite {
         bool getActive() const { return active_; }
         void setActive(const bool active) { active_ = active; }
 
-        virtual void update() {}
-
     private:
         bool active_{true};
 };

@@ -42,6 +42,7 @@ class Tetris {
         std::function<void(Tetris&)> gameOverCallback;
         std::function<void(const int)> scoreUpdatedCallback;
         std::function<void(const Tetromino&)> tetrominoUpdatedCallback;
+        std::function<void(const Tetromino&)> nextTetrominoCallback;
         std::function<void(const WorldBlockArray&)> worldUpdatedCallback;
 
     private:
@@ -50,6 +51,10 @@ class Tetris {
 
         constexpr static const float DEFAULT_DELAY{0.8f};
         constexpr static const float FAST_FALL_DELAY{0.05f};
+
+        Tetromino newTetromino();
+        void resetCurrentTetromino(const Tetromino& tetromino);
+        void checkGameOver();
 
         void moveTetromino();
         void rotateTetromino();
@@ -60,19 +65,20 @@ class Tetris {
         void saveCurrentTetromino();
 
         bool hasCollisions();
-        void nextTetromino();
         void setupBlockDataArray();
 
         void fireGameStarted();
         void fireGameOver();
         void fireScoreUpdated();
         void fireTetrominoUpdated();
+        void fireNextTetrominoUpdated();
         void fireWorldUpdated();
 
         BlockDataArray blockDataArray_{};
         WorldBlockArray worldBlockArray_{};
         Tetromino currentTetromino_{};
         Tetromino currentTetrominoCopy_{};
+        Tetromino nextTetromino_{};
 
         InputDirection inputMovement_{InputDirection::NONE};
         InputDirection inputRotation_{InputDirection::NONE};

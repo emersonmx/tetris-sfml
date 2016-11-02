@@ -1,5 +1,7 @@
 #include "Tetris/States/GameState.hpp"
 
+#include <iostream>
+
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -18,6 +20,7 @@ namespace states {
 struct GameState::Impl {
     tetris::game::Tetris world{};
     tetris::gameobjects::Tetromino tetrominoObject{};
+    tetris::gameobjects::Tetromino nextTetrominoObject{};
     tetris::gameobjects::GameArea gameAreaObject{};
     sf::Sprite gridSprite{};
     sf::RectangleShape gameAreaShape{};
@@ -193,15 +196,24 @@ void GameState::render(sf::RenderTarget& renderTarget) {
     renderTarget.draw(impl_->nextText);
 
     renderTarget.draw(impl_->tetrominoObject);
+    renderTarget.draw(impl_->nextTetrominoObject);
     renderTarget.draw(impl_->gameAreaObject);
 }
 
 void GameState::setupBlockRenderers() {
     auto& blockTexture = getApp().getAssets().getBlock();
+
     impl_->tetrominoObject.create(blockTexture);
     impl_->world.tetrominoUpdatedCallback = [&] (const Tetromino& tetromino) {
         impl_->tetrominoObject.updateTetromino(tetromino);
     };
+
+    impl_->nextTetrominoObject.create(blockTexture);
+    impl_->nextTetrominoObject.setPosition(416, 480);
+    impl_->world.nextTetrominoCallback = [&] (const Tetromino& tetromino) {
+        impl_->nextTetrominoObject.updateTetromino(tetromino);
+    };
+
     impl_->gameAreaObject.create(blockTexture);
     impl_->world.worldUpdatedCallback = [&] (const Tetris::WorldBlockArray& blocks) {
         impl_->gameAreaObject.updateWorld(blocks);

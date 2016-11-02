@@ -15,7 +15,10 @@ void Tetris::create(int seed) {
     rng_.seed(seed);
 
     setupBlockDataArray();
-    nextTetromino();
+
+    resetCurrentTetromino(newTetromino());
+    checkGameOver();
+
     fireGameStarted();
 }
 
@@ -56,6 +59,29 @@ void Tetris::update(const float deltaTime) {
     }
 }
 
+Tetromino Tetris::newTetromino() {
+    std::uniform_int_distribution<> uniform_dist(0,
+            static_cast<int>(Tetromino::Type::SIZE) - 1);
+    int index = uniform_dist(rng_);
+
+    Tetromino tetromino;
+    tetromino.setType(static_cast<Tetromino::Type>(index));
+    tetromino.loadRotationsFromIntArray(blockDataArray_[index]);
+    return tetromino;
+}
+
+void Tetris::resetCurrentTetromino(const Tetromino& tetromino) {
+    currentTetromino_ = tetromino;
+    currentTetromino_.move({4, 1});
+    nextTetromino_ = newTetromino();
+}
+
+void Tetris::checkGameOver() {
+    if (hasCollisions()) {
+        gameOver_ = true;
+    }
+}
+
 void Tetris::moveTetromino() {
     int movement = static_cast<int>(inputMovement_);
     currentTetromino_.move({movement, 0});
@@ -87,9 +113,13 @@ void Tetris::moveDownTetromino() {
                 int type = static_cast<int>(currentTetromino_.getType()) + 1;
                 worldBlockArray_[block.y][block.x] = type;
             }
-            nextTetromino();
+
+            resetCurrentTetromino(nextTetromino_);
+            checkGameOver();
+
             eraseLines();
             fireWorldUpdated();
+            fireNextTetrominoUpdated();
         }
         timer_ = 0.0f;
     }
@@ -137,23 +167,6 @@ bool Tetris::hasCollisions() {
     }
 
     return false;
-}
-
-void Tetris::nextTetromino() {
-    std::uniform_int_distribution<> uniform_dist(0,
-            static_cast<int>(Tetromino::Type::SIZE) - 1);
-    int index = uniform_dist(rng_);
-
-    Tetromino tetromino;
-    tetromino.setType(static_cast<Tetromino::Type>(index));
-    tetromino.loadRotationsFromIntArray(blockDataArray_[index]);
-    tetromino.move({4, 1});
-
-    currentTetromino_ = tetromino;
-
-    if (hasCollisions()) {
-        gameOver_ = true;
-    }
 }
 
 void Tetris::setupBlockDataArray() {
@@ -209,6 +222,7 @@ void Tetris::fireGameStarted() {
     }
 
     fireTetrominoUpdated();
+    fireNextTetrominoUpdated();
     fireWorldUpdated();
 }
 
@@ -227,6 +241,12 @@ void Tetris::fireScoreUpdated() {
 void Tetris::fireTetrominoUpdated() {
     if (tetrominoUpdatedCallback) {
         tetrominoUpdatedCallback(currentTetromino_);
+    }
+}
+
+void Tetris::fireNextTetrominoUpdated() {
+    if (nextTetrominoCallback) {
+        nextTetrominoCallback(nextTetromino_);
     }
 }
 

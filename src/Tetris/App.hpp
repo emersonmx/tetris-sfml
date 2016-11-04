@@ -15,7 +15,7 @@ namespace tetris {
 class App : public mxg::Game {
     public:
         enum class State {
-            MENU, GAME, GAME_MENU, SIZE
+            GAME, SIZE
         };
 
         static const int TILE_SIZE{32};

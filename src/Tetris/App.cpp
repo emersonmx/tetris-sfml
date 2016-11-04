@@ -30,6 +30,10 @@ void App::create() {
 }
 
 void App::destroy() {
+    for (auto& state : states_) {
+        state->destroy();
+    }
+
     states_ = {};
     window_.close();
 }

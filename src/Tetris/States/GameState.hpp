@@ -23,6 +23,7 @@ class GameState : public DefaultState {
         void render(sf::RenderTarget& renderTarget) override;
 
     private:
+        void setupScores();
         void setupBlockRenderers();
 
         struct Impl;

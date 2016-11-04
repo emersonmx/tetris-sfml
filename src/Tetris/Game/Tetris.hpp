@@ -31,6 +31,11 @@ class Tetris {
         bool getFastFall() { return fastFall_; }
         void setFastFall(const bool fastFall) { fastFall_= fastFall; }
         bool isGameOver() { return gameOver_; }
+        int getScore() const { return score_; }
+        void setScore(const int score);
+        void addScore(const int value);
+        int getHighScore() const { return highScore_; }
+        void setHighScore(const int highScore);
 
         void create();
         void create(int seed);
@@ -41,6 +46,7 @@ class Tetris {
         std::function<void(Tetris&)> gameStartedCallback;
         std::function<void(Tetris&)> gameOverCallback;
         std::function<void(const int)> scoreUpdatedCallback;
+        std::function<void(const int)> highScoreUpdatedCallback;
         std::function<void(const Tetromino&)> tetrominoUpdatedCallback;
         std::function<void(const Tetromino&)> nextTetrominoCallback;
         std::function<void(const WorldBlockArray&)> worldUpdatedCallback;
@@ -51,6 +57,8 @@ class Tetris {
 
         constexpr static const float DEFAULT_DELAY{0.8f};
         constexpr static const float FAST_FALL_DELAY{0.05f};
+        constexpr static const int SCORE_POINT{1};
+        constexpr static const int SCORE_BASE_POINTS{300};
 
         Tetromino newTetromino();
         void resetCurrentTetromino(const Tetromino& tetromino);
@@ -70,6 +78,7 @@ class Tetris {
         void fireGameStarted();
         void fireGameOver();
         void fireScoreUpdated();
+        void fireHighScoreUpdated();
         void fireTetrominoUpdated();
         void fireNextTetrominoUpdated();
         void fireWorldUpdated();
@@ -88,6 +97,7 @@ class Tetris {
 
         bool gameOver_{false};
         int score_{0};
+        int highScore_{0};
 
         std::mt19937 rng_;
 };

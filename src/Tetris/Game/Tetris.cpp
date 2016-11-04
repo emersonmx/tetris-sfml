@@ -7,6 +7,20 @@
 namespace tetris {
 namespace game {
 
+void Tetris::setScore(const int score) {
+    score_ = score;
+    fireScoreUpdated();
+}
+
+void Tetris::addScore(const int value) {
+    setScore(score_ + value);
+}
+
+void Tetris::setHighScore(const int highScore) {
+    highScore_ = highScore;
+    fireHighScoreUpdated();
+}
+
 void Tetris::create() {
     create(time(0));
 }
@@ -107,6 +121,7 @@ void Tetris::moveDownTetromino() {
 
         Tetromino::Position fallMovement{0, 1};
         currentTetromino_.move(fallMovement);
+        addScore(SCORE_POINT);
 
         if (hasCollisions()) {
             for (auto block : currentTetrominoCopy_.getBlocks()) {
@@ -129,6 +144,7 @@ void Tetris::moveDownTetromino() {
 
 void Tetris::eraseLines() {
     int k = WORLD_HEIGHT - 1;
+    int linesErased = 0;
     for (int i = WORLD_HEIGHT - 1; i > 0; --i) {
         int count = 0;
         for (int j = 0; j < WORLD_WIDTH; ++j) {
@@ -140,8 +156,13 @@ void Tetris::eraseLines() {
         if (count < WORLD_WIDTH) {
             k--;
         } else {
-            fireScoreUpdated();
+            linesErased++;
         }
+    }
+
+    if (linesErased > 0) {
+        addScore(SCORE_BASE_POINTS * linesErased + (SCORE_BASE_POINTS * (linesErased - 1) / 3));
+        fireScoreUpdated();
     }
 }
 
@@ -221,6 +242,7 @@ void Tetris::fireGameStarted() {
         gameStartedCallback(*this);
     }
 
+    fireScoreUpdated();
     fireTetrominoUpdated();
     fireNextTetrominoUpdated();
     fireWorldUpdated();
@@ -235,6 +257,16 @@ void Tetris::fireGameOver() {
 void Tetris::fireScoreUpdated() {
     if (scoreUpdatedCallback) {
         scoreUpdatedCallback(score_);
+    }
+
+    if (score_ >= highScore_) {
+        setHighScore(score_);
+    }
+}
+
+void Tetris::fireHighScoreUpdated() {
+    if (highScoreUpdatedCallback) {
+        highScoreUpdatedCallback(highScore_);
     }
 }
 

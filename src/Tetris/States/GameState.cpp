@@ -1,6 +1,8 @@
 #include "Tetris/States/GameState.hpp"
 
 #include <iostream>
+#include <sstream>
+#include <iomanip>
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -34,6 +36,14 @@ struct GameState::Impl {
     sf::Text nextText{};
     std::array<sf::Text, 3> infoText{};
 
+    sf::Color defaultFontColor{255, 255, 255};
+    sf::Color backgroundShapeColor{254,127,45};
+    sf::Color gameAreaShapeColor{253,226,154};
+    sf::Color nextShapeColor{252,202,70};
+    int defaultFontSize{28};
+    int uiCenterPosition{448};
+    sf::Vector2f aux{};
+
     sf::Clock clock{};
     float deltaTime{0.0f};
     bool paused{false};
@@ -49,15 +59,7 @@ void GameState::create() {
     auto& app = getApp();
     auto& assets = app.getAssets();
 
-    sf::Vector2f aux{};
-    int uiCenterPosition = 448;
     auto& defaultFont = assets.getDefaultFont();
-
-    sf::Color defaultFontColor{255, 255, 255};
-    sf::Color backgroundShapeColor{254,127,45};
-    sf::Color gameAreaShapeColor{253,226,154};
-    sf::Color nextShapeColor{252,202,70};
-    int defaultFontSize = 28;
 
     //blockRenderer_.create(assets);
     impl_->gridSprite.setTexture(assets.getGrid());
@@ -67,57 +69,27 @@ void GameState::create() {
         App::TILE_SIZE * Tetris::WORLD_HEIGHT
     });
     impl_->gameAreaShape.setPosition(0, 0);
-    impl_->gameAreaShape.setFillColor(gameAreaShapeColor);
+    impl_->gameAreaShape.setFillColor(impl_->gameAreaShapeColor);
 
     impl_->backgroundShape.setSize({
         App::WINDOW_WIDTH, App::WINDOW_HEIGHT
     });
     impl_->backgroundShape.setPosition(0, 0);
-    impl_->backgroundShape.setFillColor(backgroundShapeColor);
+    impl_->backgroundShape.setFillColor(impl_->backgroundShapeColor);
 
     impl_->nextShape.setSize({128, 128});
     impl_->nextShape.setPosition(384, App::TILE_SIZE*13);
-    impl_->nextShape.setFillColor(nextShapeColor);
+    impl_->nextShape.setFillColor(impl_->nextShapeColor);
 
-    impl_->highScoreText.setFont(defaultFont);
-    impl_->highScoreText.setCharacterSize(defaultFontSize);
-    impl_->highScoreText.setFillColor(defaultFontColor);
-    impl_->highScoreText.setString("HI-SCORE");
-    aux = calculateCenterOfRect(impl_->highScoreText.getLocalBounds());
-    impl_->highScoreText.setOrigin(aux);
-    impl_->highScoreText.setPosition(uiCenterPosition, 49);
-
-    impl_->highScoreValueText.setFont(defaultFont);
-    impl_->highScoreValueText.setCharacterSize(defaultFontSize);
-    impl_->highScoreValueText.setFillColor(defaultFontColor);
-    impl_->highScoreValueText.setString("00000000");
-    aux = calculateCenterOfRect(impl_->highScoreValueText.getLocalBounds());
-    impl_->highScoreValueText.setOrigin(aux);
-    impl_->highScoreValueText.setPosition(uiCenterPosition, 80);
-
-    impl_->scoreText.setFont(defaultFont);
-    impl_->scoreText.setCharacterSize(defaultFontSize);
-    impl_->scoreText.setFillColor(defaultFontColor);
-    impl_->scoreText.setString("SCORE");
-    aux = calculateCenterOfRect(impl_->scoreText.getLocalBounds());
-    impl_->scoreText.setOrigin(aux);
-    impl_->scoreText.setPosition(uiCenterPosition, 112);
-
-    impl_->scoreValueText.setFont(defaultFont);
-    impl_->scoreValueText.setCharacterSize(defaultFontSize);
-    impl_->scoreValueText.setFillColor(defaultFontColor);
-    impl_->scoreValueText.setString("00000000");
-    aux = calculateCenterOfRect(impl_->scoreValueText.getLocalBounds());
-    impl_->scoreValueText.setOrigin(aux);
-    impl_->scoreValueText.setPosition(uiCenterPosition, 144);
+    setupScores();
 
     int infoTextSize = static_cast<int>(impl_->infoText.size());
     int infoTextBaseY = 240;
     for (int i = 0; i < infoTextSize; ++i) {
         auto& text = impl_->infoText[i];
         text.setFont(defaultFont);
-        text.setCharacterSize(defaultFontSize);
-        text.setFillColor(defaultFontColor);
+        text.setCharacterSize(impl_->defaultFontSize);
+        text.setFillColor(impl_->defaultFontColor);
         switch (i) {
             case 0:
                 text.setString("Press");
@@ -129,18 +101,20 @@ void GameState::create() {
                 text.setString("menu");
                 break;
         }
-        aux = calculateCenterOfRect(text.getLocalBounds());
-        text.setOrigin(aux);
-        text.setPosition(uiCenterPosition, infoTextBaseY + 32 * i);
+        impl_->aux = tetris::utils::calculateCenterOfRect(
+                text.getLocalBounds());
+        text.setOrigin(impl_->aux);
+        text.setPosition(impl_->uiCenterPosition, infoTextBaseY + 32 * i);
     }
 
     impl_->nextText.setFont(defaultFont);
-    impl_->nextText.setCharacterSize(defaultFontSize);
-    impl_->nextText.setFillColor(defaultFontColor);
+    impl_->nextText.setCharacterSize(impl_->defaultFontSize);
+    impl_->nextText.setFillColor(impl_->defaultFontColor);
     impl_->nextText.setString("NEXT");
-    aux = calculateCenterOfRect(impl_->nextText.getLocalBounds());
-    impl_->nextText.setOrigin(aux);
-    impl_->nextText.setPosition(uiCenterPosition, 400);
+    impl_->aux = tetris::utils::calculateCenterOfRect(
+            impl_->nextText.getLocalBounds());
+    impl_->nextText.setOrigin(impl_->aux);
+    impl_->nextText.setPosition(impl_->uiCenterPosition, 400);
 
     setupBlockRenderers();
     impl_->world.create();
@@ -198,6 +172,59 @@ void GameState::render(sf::RenderTarget& renderTarget) {
     renderTarget.draw(impl_->tetrominoObject);
     renderTarget.draw(impl_->nextTetrominoObject);
     renderTarget.draw(impl_->gameAreaObject);
+}
+
+void GameState::setupScores() {
+    auto& defaultFont = getApp().getAssets().getDefaultFont();
+
+    impl_->highScoreText.setFont(defaultFont);
+    impl_->highScoreText.setCharacterSize(impl_->defaultFontSize);
+    impl_->highScoreText.setFillColor(impl_->defaultFontColor);
+    impl_->highScoreText.setString("HI-SCORE");
+    impl_->aux = tetris::utils::calculateCenterOfRect(
+            impl_->highScoreText.getLocalBounds());
+    impl_->highScoreText.setOrigin(impl_->aux);
+    impl_->highScoreText.setPosition(impl_->uiCenterPosition, 49);
+
+    impl_->highScoreValueText.setFont(defaultFont);
+    impl_->highScoreValueText.setCharacterSize(impl_->defaultFontSize);
+    impl_->highScoreValueText.setFillColor(impl_->defaultFontColor);
+    impl_->highScoreValueText.setString("00000000");
+    impl_->aux = tetris::utils::calculateCenterOfRect(
+            impl_->highScoreValueText.getLocalBounds());
+    impl_->highScoreValueText.setOrigin(impl_->aux);
+    impl_->highScoreValueText.setPosition(impl_->uiCenterPosition, 80);
+
+    impl_->scoreText.setFont(defaultFont);
+    impl_->scoreText.setCharacterSize(impl_->defaultFontSize);
+    impl_->scoreText.setFillColor(impl_->defaultFontColor);
+    impl_->scoreText.setString("SCORE");
+    impl_->aux = tetris::utils::calculateCenterOfRect(
+            impl_->scoreText.getLocalBounds());
+    impl_->scoreText.setOrigin(impl_->aux);
+    impl_->scoreText.setPosition(impl_->uiCenterPosition, 112);
+
+    impl_->scoreValueText.setFont(defaultFont);
+    impl_->scoreValueText.setCharacterSize(impl_->defaultFontSize);
+    impl_->scoreValueText.setFillColor(impl_->defaultFontColor);
+    impl_->scoreValueText.setString("00000000");
+    impl_->aux = tetris::utils::calculateCenterOfRect(
+            impl_->scoreValueText.getLocalBounds());
+    impl_->scoreValueText.setOrigin(impl_->aux);
+    impl_->scoreValueText.setPosition(impl_->uiCenterPosition, 144);
+
+    impl_->world.scoreUpdatedCallback = [&] (const int score) {
+        std::ostringstream buf;
+        buf << std::setfill('0') << std::setw(8);
+        buf << score;
+        impl_->scoreValueText.setString(buf.str());
+    };
+    impl_->world.highScoreUpdatedCallback = [&] (const int highScore) {
+        std::ostringstream buf;
+        buf << std::setfill('0') << std::setw(8);
+        buf << highScore;
+        impl_->highScoreValueText.setString(buf.str());
+    };
 }
 
 void GameState::setupBlockRenderers() {

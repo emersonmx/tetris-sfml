@@ -83,9 +83,11 @@ void Tetris::loadHighScore() {
     std::ifstream scoreboard;
     int highScore;
     scoreboard.open(SCOREBOARD_FILE);
-    scoreboard >> highScore;;
-    scoreboard.close();
-    setHighScore(highScore);
+    if (scoreboard.is_open()) {
+        scoreboard >> highScore;
+        scoreboard.close();
+        setHighScore(highScore);
+    }
 }
 
 void Tetris::saveHighScore() {

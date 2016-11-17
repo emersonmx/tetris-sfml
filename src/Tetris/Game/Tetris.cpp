@@ -1,5 +1,7 @@
 #include "Tetris/Game/Tetris.hpp"
 
+#include <iostream>
+#include <fstream>
 #include <ctime>
 #include <stdexcept>
 #include <algorithm>
@@ -28,6 +30,8 @@ void Tetris::create() {
 void Tetris::create(int seed) {
     rng_.seed(seed);
 
+    loadHighScore();
+
     setupBlockDataArray();
 
     resetCurrentTetromino(newTetromino());
@@ -37,6 +41,8 @@ void Tetris::create(int seed) {
 }
 
 void Tetris::destroy() {
+    saveHighScore();
+
     blockDataArray_ = {};
     worldBlockArray_ = {};
     currentTetromino_ = {};
@@ -70,6 +76,28 @@ void Tetris::update(const float deltaTime) {
 
     if (gameOver_) {
         fireGameOver();
+    }
+}
+
+void Tetris::loadHighScore() {
+    std::ifstream scoreboard;
+    int highScore;
+    scoreboard.open(SCOREBOARD_FILE);
+    if (scoreboard.is_open()) {
+        scoreboard >> highScore;
+        scoreboard.close();
+        setHighScore(highScore);
+    }
+}
+
+void Tetris::saveHighScore() {
+    std::ofstream scoreboard;
+    scoreboard.open(SCOREBOARD_FILE);
+    if (scoreboard.is_open()) {
+        scoreboard << getHighScore();
+        scoreboard.close();
+    } else {
+        std::cout << "Unable to save scoreboard" << std::endl;
     }
 }
 

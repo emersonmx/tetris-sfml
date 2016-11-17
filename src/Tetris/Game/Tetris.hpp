@@ -59,6 +59,10 @@ class Tetris {
         constexpr static const float FAST_FALL_DELAY{0.05f};
         constexpr static const int SCORE_POINT{1};
         constexpr static const int SCORE_BASE_POINTS{300};
+        constexpr static const char* SCOREBOARD_FILE = ".scoreboard";
+
+        void loadHighScore();
+        void saveHighScore();
 
         Tetromino newTetromino();
         void resetCurrentTetromino(const Tetromino& tetromino);

@@ -6,6 +6,7 @@
 
 #include "mxg/DefaultState.hpp"
 
+#include "Tetris/States/MainMenuState.hpp"
 #include "Tetris/States/GameState.hpp"
 
 namespace tetris {
@@ -43,10 +44,15 @@ void App::setupStates() {
 
     clearState();
 
+    auto mainMenuState = std::make_unique<MainMenuState>(*this);
+    mainMenuState->create();
+    states_[static_cast<int>(State::MAIN_MENU)] = std::move(mainMenuState);
+
     auto gameState = std::make_unique<GameState>(*this);
     gameState->create();
     states_[static_cast<int>(State::GAME)] = std::move(gameState);
-    changeState(State::GAME);
+
+    changeState(State::MAIN_MENU);
 }
 
 } /* namespace tetris */

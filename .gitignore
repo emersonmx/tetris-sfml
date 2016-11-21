@@ -5,6 +5,7 @@ tags
 .settings/
 .project
 .cproject
+.tmux.conf
 *.py[co]
 *\~
 .idea/

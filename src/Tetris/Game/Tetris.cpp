@@ -114,7 +114,11 @@ Tetromino Tetris::newTetromino() {
 
 void Tetris::resetCurrentTetromino(const Tetromino& tetromino) {
     currentTetromino_ = tetromino;
-    currentTetromino_.move({4, 1});
+    if (currentTetromino_.getType() == Tetromino::Type::Z) {
+        currentTetromino_.move({4, 0});
+    } else {
+        currentTetromino_.move({4, 1});
+    }
     nextTetromino_ = newTetromino();
 }
 

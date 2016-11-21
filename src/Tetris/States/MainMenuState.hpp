@@ -21,6 +21,8 @@ class MainMenuState : public DefaultState {
         void update() override;
         void render(sf::RenderTarget& renderTarget) override;
         void endTick() override;
+
+        bool gameStart_{false};
 };
 
 } /* namespace states */

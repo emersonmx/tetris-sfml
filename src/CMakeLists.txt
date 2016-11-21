@@ -17,6 +17,7 @@ add_executable(${PROJECT_NAME}
     Tetris/GameObjects/BlockRenderer.cpp
     Tetris/GameObjects/Tetromino.cpp
     Tetris/GameObjects/GameArea.cpp
+    Tetris/GameObjects/GameMenu.cpp
 
     Tetris/Game/Tetromino.cpp
     Tetris/Game/Tetris.cpp

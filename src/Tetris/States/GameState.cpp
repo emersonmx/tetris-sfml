@@ -13,6 +13,7 @@
 #include "Tetris/Game/Tetris.hpp"
 #include "Tetris/GameObjects/Tetromino.hpp"
 #include "Tetris/GameObjects/GameArea.hpp"
+#include "Tetris/GameObjects/GameMenu.hpp"
 
 using namespace tetris::game;
 
@@ -24,6 +25,8 @@ struct GameState::Impl {
     tetris::gameobjects::Tetromino tetrominoObject{};
     tetris::gameobjects::Tetromino nextTetrominoObject{};
     tetris::gameobjects::GameArea gameAreaObject{};
+    tetris::gameobjects::GameMenu gameMenu{};
+
     sf::Sprite gridSprite{};
     sf::RectangleShape gameAreaShape{};
     sf::RectangleShape backgroundShape{};
@@ -47,21 +50,23 @@ struct GameState::Impl {
     sf::Clock clock{};
     float deltaTime{0.0f};
     bool paused{false};
+    bool restart{false};
 };
 
 GameState::GameState(App& app)
-    : DefaultState(app), impl_(std::make_unique<Impl>()) {}
+    : DefaultState(app) {}
 GameState::~GameState() = default;
 
 void GameState::create() {
     using namespace tetris::utils;
+
+    impl_ = std::make_unique<Impl>();
 
     auto& app = getApp();
     auto& assets = app.getAssets();
 
     auto& defaultFont = assets.getDefaultFont();
 
-    //blockRenderer_.create(assets);
     impl_->gridSprite.setTexture(assets.getGrid());
 
     impl_->gameAreaShape.setSize({
@@ -81,6 +86,7 @@ void GameState::create() {
     impl_->nextShape.setPosition(384, App::TILE_SIZE*13);
     impl_->nextShape.setFillColor(impl_->nextShapeColor);
 
+    setupGameMenu();
     setupScores();
 
     int infoTextSize = static_cast<int>(impl_->infoText.size());
@@ -124,6 +130,11 @@ void GameState::destroy() {
     impl_->world.destroy();
 }
 
+void GameState::restart() {
+    destroy();
+    create();
+}
+
 void GameState::beginTick() {
     impl_->deltaTime = impl_->clock.restart().asSeconds();
 }
@@ -143,7 +154,28 @@ void GameState::processEvent(const sf::Event& event) {
             impl_->world.setInputRotation(Tetris::InputDirection::RIGHT);
         }
         if (event.key.code == sf::Keyboard::Return) {
+            if (impl_->paused) {
+                enum { RESUME, RETRY, QUIT };
+                int selected = impl_->gameMenu.getSelected();
+                switch (selected) {
+                    case RETRY:
+                        impl_->restart = true;
+                        break;
+                    case QUIT:
+                        getApp().exit();
+                        break;
+                }
+            }
+
             impl_->paused = !impl_->paused;
+            impl_->gameMenu.setActive(impl_->paused);
+        }
+        if (impl_->paused) {
+            if (event.key.code == sf::Keyboard::Up) {
+                impl_->gameMenu.previous();
+            } else if (event.key.code == sf::Keyboard::Down) {
+                impl_->gameMenu.next();
+            }
         }
     }
 }
@@ -172,6 +204,31 @@ void GameState::render(sf::RenderTarget& renderTarget) {
     renderTarget.draw(impl_->tetrominoObject);
     renderTarget.draw(impl_->nextTetrominoObject);
     renderTarget.draw(impl_->gameAreaObject);
+    renderTarget.draw(impl_->gameMenu);
+}
+
+void GameState::endTick() {
+    if (impl_->restart) {
+        restart();
+    }
+}
+
+void GameState::setupGameMenu() {
+    auto& defaultFont = getApp().getAssets().getDefaultFont();
+
+    impl_->gameMenu.setOptions({"RESUME", "RETRY", "QUIT"});
+    impl_->gameMenu.setFont(defaultFont);
+    impl_->gameMenu.setCharacterSize(impl_->defaultFontSize);
+    impl_->gameMenu.setWidth(App::TILE_SIZE*5);
+    impl_->gameMenu.setPadding(App::TILE_SIZE / 2.0f, App::TILE_SIZE / 2.0f,
+                               App::TILE_SIZE / 2.0f, App::TILE_SIZE / 2.0f);
+    impl_->gameMenu.setLineSpacing(impl_->defaultFontSize/2);
+    impl_->gameMenu.setBackgroundColor(impl_->backgroundShapeColor);
+    impl_->gameMenu.setForegroundColor(impl_->defaultFontColor);
+    impl_->gameMenu.setSelectColor(impl_->nextShapeColor);
+    impl_->gameMenu.setPosition({5*App::TILE_SIZE, 9*App::TILE_SIZE});
+    impl_->gameMenu.create();
+    impl_->gameMenu.setActive(false);
 }
 
 void GameState::setupScores() {

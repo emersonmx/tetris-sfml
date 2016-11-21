@@ -15,14 +15,17 @@ class GameState : public DefaultState {
 
         void create() override;
         void destroy() override;
+        void restart();
 
     protected:
         void beginTick() override;
         void processEvent(const sf::Event& event) override;
         void update() override;
         void render(sf::RenderTarget& renderTarget) override;
+        void endTick() override;
 
     private:
+        void setupGameMenu();
         void setupScores();
         void setupBlockRenderers();
 

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+convert src/main_menu.xcf -flatten main_menu.jpg
+
 inkscape src/block.svg --export-png=block.png
 inkscape src/grid.svg --export-png=grid.png
 

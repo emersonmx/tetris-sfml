@@ -1,6 +1,8 @@
 #ifndef TETRIS_STATES_MAINMENUSTATE_HPP_
 #define TETRIS_STATES_MAINMENUSTATE_HPP_
 
+#include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Clock.hpp>
 
 #include "Tetris/States/DefaultState.hpp"
@@ -23,6 +25,9 @@ class MainMenuState : public DefaultState {
         void update() override;
         void render(sf::RenderTarget& renderTarget) override;
         void endTick() override;
+
+        sf::Sprite mainMenuSprite_{};
+        sf::Text gameStartText{};
 
         sf::Clock clock_;
         bool gameStart_{false};

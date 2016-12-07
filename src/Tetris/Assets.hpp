@@ -16,6 +16,7 @@ class Assets {
 
         sf::Texture& getBlock() { return block_; }
         sf::Texture& getGrid() { return grid_; }
+        sf::Texture& getMainMenuTexture() { return mainMenuTexture_; }
 
         sf::Font& getDefaultFont() { return defaultFont_; }
 
@@ -47,6 +48,7 @@ class Assets {
 
         sf::Texture block_;
         sf::Texture grid_;
+        sf::Texture mainMenuTexture_;
 
         sf::Font defaultFont_;
 

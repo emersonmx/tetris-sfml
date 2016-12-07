@@ -35,18 +35,11 @@ sf::Sound& Assets::getRotateTetrominoSound() {
 void Assets::loadAssets() {
     block_ = loadFromFile<sf::Texture>("assets/block.png");
     grid_ = loadFromFile<sf::Texture>("assets/grid.png");
+    mainMenuTexture_ = loadFromFile<sf::Texture>("assets/main_menu.jpg");
 
     defaultFont_ = loadFromFile<sf::Font>("assets/Chewy.ttf");
 
     loadSounds();
-
-    //eraseLinesSound_ = loadFromFile<sf::Sound>("erase_lines.wav");
-    //fitTetrominoSound_ = loadFromFile<sf::Sound>("fit_tetromino.wav");
-    //gameOverSound_ = loadFromFile<sf::Sound>("game_over.wav");
-    //gameStartSound_ = loadFromFile<sf::Sound>("game_start.wav");
-    //menuOpenSound_ = loadFromFile<sf::Sound>("menu_open.wav");
-    //moveTetrominoSound_ = loadFromFile<sf::Sound>("move_tetromino.wav");
-    //rotateTetrominoSound_ = loadFromFile<sf::Sound>("rotate_tetromino.wav");
 }
 
 void Assets::loadSounds() {

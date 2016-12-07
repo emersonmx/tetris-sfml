@@ -1,6 +1,8 @@
 #ifndef TETRIS_STATES_MAINMENUSTATE_HPP_
 #define TETRIS_STATES_MAINMENUSTATE_HPP_
 
+#include <SFML/System/Clock.hpp>
+
 #include "Tetris/States/DefaultState.hpp"
 
 namespace tetris {
@@ -22,6 +24,7 @@ class MainMenuState : public DefaultState {
         void render(sf::RenderTarget& renderTarget) override;
         void endTick() override;
 
+        sf::Clock clock_;
         bool gameStart_{false};
 };
 

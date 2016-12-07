@@ -1,5 +1,5 @@
 # Setup
-find_package(SFML 2 REQUIRED graphics system window)
+find_package(SFML 2 REQUIRED graphics system window audio)
 
 include_directories(
     "${SFML_INCLUDE_DIR}"

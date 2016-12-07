@@ -1,3 +1,5 @@
-block.png
-grid.png
-main_music.mp3
+/*
+/*/
+!/src/
+!/build_assets.sh
+!/.gitignore

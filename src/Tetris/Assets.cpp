@@ -34,8 +34,9 @@ sf::Sound& Assets::getRotateTetrominoSound() {
 
 void Assets::loadAssets() {
     block_ = loadFromFile<sf::Texture>("assets/block.png");
+    miniBlockTexture_ = loadFromFile<sf::Texture>("assets/mini_block.png");
     grid_ = loadFromFile<sf::Texture>("assets/grid.png");
-    mainMenuTexture_ = loadFromFile<sf::Texture>("assets/main_menu.jpg");
+    mainMenuBackgroundTexture_ = loadFromFile<sf::Texture>("assets/main_menu_bg.png");
 
     defaultFont_ = loadFromFile<sf::Font>("assets/Chewy.ttf");
 

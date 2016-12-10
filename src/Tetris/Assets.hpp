@@ -15,8 +15,9 @@ class Assets {
         virtual ~Assets() {}
 
         sf::Texture& getBlock() { return block_; }
+        sf::Texture& getMiniBlockTexture() { return miniBlockTexture_; }
         sf::Texture& getGrid() { return grid_; }
-        sf::Texture& getMainMenuTexture() { return mainMenuTexture_; }
+        sf::Texture& getMainMenuBackgroundTexture() { return mainMenuBackgroundTexture_; }
 
         sf::Font& getDefaultFont() { return defaultFont_; }
 
@@ -47,8 +48,9 @@ class Assets {
 
 
         sf::Texture block_;
+        sf::Texture miniBlockTexture_;
         sf::Texture grid_;
-        sf::Texture mainMenuTexture_;
+        sf::Texture mainMenuBackgroundTexture_;
 
         sf::Font defaultFont_;
 

@@ -15,6 +15,7 @@ add_executable(${PROJECT_NAME}
     Tetris/States/MainMenuState.cpp
 
     Tetris/GameObjects/BlockRenderer.cpp
+    Tetris/GameObjects/RandomMiniBlocks.cpp
     Tetris/GameObjects/Tetromino.cpp
     Tetris/GameObjects/GameArea.cpp
     Tetris/GameObjects/GameMenu.cpp

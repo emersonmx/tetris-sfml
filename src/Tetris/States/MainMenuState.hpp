@@ -6,6 +6,7 @@
 #include <SFML/System/Clock.hpp>
 
 #include "Tetris/States/DefaultState.hpp"
+#include "Tetris/GameObjects/RandomMiniBlocks.hpp"
 
 namespace tetris {
 namespace states {
@@ -26,8 +27,9 @@ class MainMenuState : public DefaultState {
         void render(sf::RenderTarget& renderTarget) override;
         void endTick() override;
 
-        sf::Sprite mainMenuSprite_{};
-        sf::Text gameStartText{};
+        gameobjects::RandomMiniBlocks miniBlocks_{};
+        sf::Sprite mainMenuBackground_{};
+        sf::Text gameStartText_{};
 
         sf::Clock clock_;
         bool gameStart_{false};

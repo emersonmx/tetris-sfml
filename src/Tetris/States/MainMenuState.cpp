@@ -19,18 +19,22 @@ void MainMenuState::create() {
     auto& assets = getApp().getAssets();
     auto& defaultFont = assets.getDefaultFont();
 
-    mainMenuSprite_.setTexture(assets.getMainMenuTexture());
-    gameStartText.setFont(defaultFont);
-    gameStartText.setCharacterSize(28);
-    gameStartText.setFillColor(sf::Color::White);
-    gameStartText.setString("PRESS ANY KEY TO START");
+    miniBlocks_.create(assets.getMiniBlockTexture());
+    mainMenuBackground_.setTexture(assets.getMainMenuBackgroundTexture());
+    mainMenuBackground_.setPosition(46, 239);
+
+    gameStartText_.setFont(defaultFont);
+    gameStartText_.setCharacterSize(28);
+    gameStartText_.setFillColor(sf::Color::White);
+    gameStartText_.setString("PRESS ENTER KEY TO START");
     auto aux = tetris::utils::calculateCenterOfRect(
-        gameStartText.getLocalBounds());
-    gameStartText.setOrigin(aux);
-    gameStartText.setPosition({App::WINDOW_WIDTH / 2.0f, App::WINDOW_HEIGHT / 1.3f});
+        gameStartText_.getLocalBounds());
+    gameStartText_.setOrigin(aux);
+    gameStartText_.setPosition({App::WINDOW_WIDTH / 2.0f, App::WINDOW_HEIGHT / 1.3f});
 
     auto& music = getApp().getAssets().getMainMusic();
     music.setVolume(70);
+    music.setLoop(true);
     music.play();
 }
 
@@ -55,8 +59,9 @@ void MainMenuState::update() {
 }
 
 void MainMenuState::render(sf::RenderTarget& renderTarget)  {
-    renderTarget.draw(mainMenuSprite_);
-    renderTarget.draw(gameStartText);
+    renderTarget.draw(mainMenuBackground_);
+    renderTarget.draw(miniBlocks_);
+    renderTarget.draw(gameStartText_);
 }
 
 void MainMenuState::endTick() {

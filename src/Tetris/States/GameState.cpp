@@ -131,6 +131,11 @@ void GameState::create() {
         fitTetrominoSound.play();
     };
 
+    auto& gameOverSound = assets.getGameOverSound();
+    impl_->world.gameOverCallback = [&] (Tetris& tetris) {
+        gameOverSound.play();
+    };
+
     setupBlockRenderers();
     impl_->world.create();
 }

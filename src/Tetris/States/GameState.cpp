@@ -232,7 +232,9 @@ void GameState::setupGameMenu() {
 }
 
 void GameState::setupScores() {
-    auto& defaultFont = getApp().getAssets().getDefaultFont();
+    auto& assets = getApp().getAssets();
+    auto& defaultFont = assets.getDefaultFont();
+    auto& eraseLinesSound = assets.getEraseLinesSound();
 
     impl_->highScoreText.setFont(defaultFont);
     impl_->highScoreText.setCharacterSize(impl_->defaultFontSize);
@@ -281,6 +283,9 @@ void GameState::setupScores() {
         buf << std::setfill('0') << std::setw(8);
         buf << highScore;
         impl_->highScoreValueText.setString(buf.str());
+    };
+    impl_->world.linesErasedCallback = [&] () {
+        eraseLinesSound.play();
     };
 }
 

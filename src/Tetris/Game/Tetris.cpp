@@ -195,6 +195,7 @@ void Tetris::eraseLines() {
     if (linesErased > 0) {
         addScore(SCORE_BASE_POINTS * linesErased + (SCORE_BASE_POINTS * (linesErased - 1) / 3));
         fireScoreUpdated();
+        fireLinesErased();
     }
 }
 
@@ -299,6 +300,12 @@ void Tetris::fireScoreUpdated() {
 void Tetris::fireHighScoreUpdated() {
     if (highScoreUpdatedCallback) {
         highScoreUpdatedCallback(highScore_);
+    }
+}
+
+void Tetris::fireLinesErased() {
+    if (linesErasedCallback) {
+        linesErasedCallback();
     }
 }
 

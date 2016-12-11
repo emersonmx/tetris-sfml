@@ -14,6 +14,7 @@
 #include "Tetris/GameObjects/Tetromino.hpp"
 #include "Tetris/GameObjects/GameArea.hpp"
 #include "Tetris/GameObjects/GameMenu.hpp"
+#include "Tetris/GameObjects/GameOver.hpp"
 
 using namespace tetris::game;
 
@@ -26,6 +27,7 @@ struct GameState::Impl {
     tetris::gameobjects::Tetromino nextTetrominoObject{};
     tetris::gameobjects::GameArea gameAreaObject{};
     tetris::gameobjects::GameMenu gameMenu{};
+    tetris::gameobjects::GameOver gameOver{};
 
     sf::Sprite gridSprite{};
     sf::RectangleShape gameAreaShape{};
@@ -87,6 +89,7 @@ void GameState::create() {
     impl_->nextShape.setFillColor(impl_->nextShapeColor);
 
     setupGameMenu();
+    setupGameOver();
     setupScores();
 
     int infoTextSize = static_cast<int>(impl_->infoText.size());
@@ -129,11 +132,6 @@ void GameState::create() {
     auto& fitTetrominoSound = assets.getFitTetrominoSound();
     impl_->world.placedTetrominoCallback = [&] () {
         fitTetrominoSound.play();
-    };
-
-    auto& gameOverSound = assets.getGameOverSound();
-    impl_->world.gameOverCallback = [&] (Tetris& tetris) {
-        gameOverSound.play();
     };
 
     setupBlockRenderers();
@@ -198,6 +196,10 @@ void GameState::processEvent(const sf::Event& event) {
 
             impl_->paused = !impl_->paused;
             impl_->gameMenu.setActive(impl_->paused);
+
+            if (impl_->paused && impl_->gameOver.getActive()) {
+                impl_->gameOver.setActive(false);
+            }
         }
         if (impl_->paused) {
             if (event.key.code == sf::Keyboard::Up) {
@@ -234,6 +236,7 @@ void GameState::render(sf::RenderTarget& renderTarget) {
     renderTarget.draw(impl_->nextTetrominoObject);
     renderTarget.draw(impl_->gameAreaObject);
     renderTarget.draw(impl_->gameMenu);
+    renderTarget.draw(impl_->gameOver);
 }
 
 void GameState::endTick() {
@@ -258,6 +261,26 @@ void GameState::setupGameMenu() {
     impl_->gameMenu.setPosition({5*App::TILE_SIZE, 9*App::TILE_SIZE});
     impl_->gameMenu.create();
     impl_->gameMenu.setActive(false);
+}
+
+void GameState::setupGameOver() {
+    auto& assets = getApp().getAssets();
+    auto& defaultFont = assets.getDefaultFont();
+    auto& gameOver = impl_->gameOver;
+
+    gameOver.setFont(defaultFont);
+    gameOver.setCharacterSize(42);
+    gameOver.setBackgroundColor(impl_->backgroundShapeColor);
+    gameOver.setForegroundColor(impl_->defaultFontColor);
+    gameOver.setPosition({5*App::TILE_SIZE, 9*App::TILE_SIZE});
+    gameOver.create();
+    gameOver.setActive(false);
+
+    auto& gameOverSound = assets.getGameOverSound();
+    impl_->world.gameOverCallback = [&] (Tetris& tetris) {
+        gameOver.setActive(true);
+        gameOverSound.play();
+    };
 }
 
 void GameState::setupScores() {

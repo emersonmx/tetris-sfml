@@ -26,6 +26,7 @@ class GameState : public DefaultState {
 
     private:
         void setupGameMenu();
+        void setupGameOver();
         void setupScores();
         void setupBlockRenderers();
 

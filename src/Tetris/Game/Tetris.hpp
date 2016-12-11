@@ -48,6 +48,7 @@ class Tetris {
         std::function<void(const int)> scoreUpdatedCallback;
         std::function<void(const int)> highScoreUpdatedCallback;
         std::function<void(void)> linesErasedCallback;
+        std::function<void(void)> placedTetrominoCallback;
         std::function<void(const Tetromino&)> tetrominoUpdatedCallback;
         std::function<void(const Tetromino&)> nextTetrominoCallback;
         std::function<void(const WorldBlockArray&)> worldUpdatedCallback;
@@ -85,6 +86,7 @@ class Tetris {
         void fireScoreUpdated();
         void fireHighScoreUpdated();
         void fireLinesErased();
+        void firePlacedTetromino();
         void fireTetrominoUpdated();
         void fireNextTetrominoUpdated();
         void fireWorldUpdated();

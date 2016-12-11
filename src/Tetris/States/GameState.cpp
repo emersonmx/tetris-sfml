@@ -122,6 +122,15 @@ void GameState::create() {
     impl_->nextText.setOrigin(impl_->aux);
     impl_->nextText.setPosition(impl_->uiCenterPosition, 400);
 
+    auto& eraseLinesSound = assets.getEraseLinesSound();
+    impl_->world.linesErasedCallback = [&] () {
+        eraseLinesSound.play();
+    };
+    auto& fitTetrominoSound = assets.getFitTetrominoSound();
+    impl_->world.placedTetrominoCallback = [&] () {
+        fitTetrominoSound.play();
+    };
+
     setupBlockRenderers();
     impl_->world.create();
 }
@@ -234,7 +243,6 @@ void GameState::setupGameMenu() {
 void GameState::setupScores() {
     auto& assets = getApp().getAssets();
     auto& defaultFont = assets.getDefaultFont();
-    auto& eraseLinesSound = assets.getEraseLinesSound();
 
     impl_->highScoreText.setFont(defaultFont);
     impl_->highScoreText.setCharacterSize(impl_->defaultFontSize);
@@ -283,9 +291,6 @@ void GameState::setupScores() {
         buf << std::setfill('0') << std::setw(8);
         buf << highScore;
         impl_->highScoreValueText.setString(buf.str());
-    };
-    impl_->world.linesErasedCallback = [&] () {
-        eraseLinesSound.play();
     };
 }
 

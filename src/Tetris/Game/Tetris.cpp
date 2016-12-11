@@ -161,6 +161,8 @@ void Tetris::moveDownTetromino() {
                 worldBlockArray_[block.y][block.x] = type;
             }
 
+            firePlacedTetromino();
+
             resetCurrentTetromino(nextTetromino_);
             checkGameOver();
 
@@ -306,6 +308,12 @@ void Tetris::fireHighScoreUpdated() {
 void Tetris::fireLinesErased() {
     if (linesErasedCallback) {
         linesErasedCallback();
+    }
+}
+
+void Tetris::firePlacedTetromino() {
+    if (placedTetrominoCallback) {
+        placedTetrominoCallback();
     }
 }
 

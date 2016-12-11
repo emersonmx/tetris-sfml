@@ -174,6 +174,9 @@ void GameState::processEvent(const sf::Event& event) {
                         getApp().exit();
                         break;
                 }
+            } else {
+                auto& menuOpenSound = getApp().getAssets().getMenuOpenSound();
+                menuOpenSound.play();
             }
 
             impl_->paused = !impl_->paused;

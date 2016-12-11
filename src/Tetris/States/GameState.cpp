@@ -154,13 +154,25 @@ void GameState::processEvent(const sf::Event& event) {
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Left) {
             impl_->world.setInputMovement(Tetris::InputDirection::LEFT);
+
+            auto& moveSound = getApp().getAssets().getMoveTetrominoSound();
+            moveSound.play();
         } else if (event.key.code == sf::Keyboard::Right) {
             impl_->world.setInputMovement(Tetris::InputDirection::RIGHT);
+
+            auto& moveSound = getApp().getAssets().getMoveTetrominoSound();
+            moveSound.play();
         }
         if (event.key.code == sf::Keyboard::Z) {
             impl_->world.setInputRotation(Tetris::InputDirection::LEFT);
+
+            auto& rotateSound = getApp().getAssets().getRotateTetrominoSound();
+            rotateSound.play();
         } else if (event.key.code == sf::Keyboard::X) {
             impl_->world.setInputRotation(Tetris::InputDirection::RIGHT);
+
+            auto& rotateSound = getApp().getAssets().getRotateTetrominoSound();
+            rotateSound.play();
         }
         if (event.key.code == sf::Keyboard::Return) {
             if (impl_->paused) {

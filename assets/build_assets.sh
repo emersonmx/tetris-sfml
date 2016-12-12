@@ -8,7 +8,7 @@ ffmpeg -y -i src/main_music.wav main_music.ogg
 
 normal_files=$(find src/ -iname "*.wav" ! -name "main_music.wav")
 normal_files+=" src/Chewy.ttf"
-normal_files+=" src/main_menu_bg.jpg"
+normal_files+=" src/main_menu_bg.png"
 
 for f in $normal_files
 do

@@ -38,6 +38,8 @@ if (WIN32)
     set(CMAKE_EXE_LINKER_FLAGS "-Wl,--subsystem,windows")
 endif()
 
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
+
 # Build settings
 add_subdirectory(src)
 
